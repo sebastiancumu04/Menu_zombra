@@ -102,7 +102,7 @@ body {
    LA ENTRADA — una sola toma; el scroll maneja el video
    ============================================================ */
 .entrada { position: relative; background: #000; }
-.entrada__track { height: 320vh; }
+.entrada__track { height: 200vh; }
 
 .entrada__pin {
   position: sticky;
@@ -1053,9 +1053,10 @@ html { scroll-behavior: smooth; }
 
   function tope(v, a, b) { return v < a ? a : v > b ? b : v; }
   function medir() {
-    var r = track.getBoundingClientRect();
-    var largo = track.offsetHeight - document.documentElement.clientHeight;
-    return tope(-r.top / largo, 0, 1);
+    // el progreso se mide sobre TODA la entrada (pin + track): así el scrub
+    // responde desde el primer scroll y no hay una pantalla muerta al inicio
+    var largo = entrada.offsetHeight - document.documentElement.clientHeight;
+    return tope(-entrada.getBoundingClientRect().top / largo, 0, 1);
   }
   function pintarEntrada() {
     var p = medir();
@@ -1090,7 +1091,7 @@ html { scroll-behavior: smooth; }
   function seek() {
     if (video && video.duration) {
       var actual = video.currentTime;
-      if (Math.abs(objetivo - actual) > 0.015) { try { video.currentTime = actual + (objetivo - actual) * 0.28; } catch (e) {} }
+      if (Math.abs(objetivo - actual) > 0.015) { try { video.currentTime = actual + (objetivo - actual) * 0.4; } catch (e) {} }
     }
     if (corriendo) requestAnimationFrame(seek);
   }
