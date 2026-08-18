@@ -349,6 +349,7 @@ body {
 
 /* --- degustación: la firma de la casa --- */
 .deg { padding-top: var(--s9); }
+.deg__hero { display: block; height: 168px; width: auto; margin: 0 auto var(--s6); opacity: .92; }
 .deg__cab { padding: 0 var(--gut) var(--s6); border-bottom: 1px solid var(--gold-deep); margin: 0 0 var(--s2); }
 .deg__t { font-family: var(--serif); font-weight: 700; font-size: var(--fs-2xl); line-height: 1; margin: 0; color: var(--ink); }
 .deg__intro { font-family: var(--serif); font-style: italic; font-size: var(--fs-md); color: var(--ink-2); margin: var(--s4) 0 0; max-width: 46ch; line-height: 1.55; }
@@ -393,7 +394,11 @@ body {
 
 /* --- secciones --- */
 .acto { padding-top: var(--s9); }
-.acto__cab { padding: 0 var(--gut) var(--s6); border-bottom: 1px solid var(--gold-deep); margin: 0 0 var(--s2); }
+.acto__cab {
+  padding: 0 var(--gut) var(--s6); border-bottom: 1px solid var(--gold-deep); margin: 0 0 var(--s2);
+  display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s4);
+}
+.acto__ilus { flex: none; height: 88px; width: auto; opacity: .9; margin-bottom: -4px; }
 .acto__t { font-family: var(--serif); font-weight: 700; font-size: var(--fs-2xl); letter-spacing: 0; line-height: 1; margin: 0; color: var(--ink); }
 
 .grupo { padding-top: var(--s7); }
@@ -768,6 +773,20 @@ html { scroll-behavior: smooth; }
   var porId = {}, _uid = 0;
   SECCIONES.forEach(function (sec) { sec.g.forEach(function (g) { (g.i || []).forEach(function (it) { it._id = "p" + (_uid++); porId[it._id] = it; }); }); });
 
+  // ilustraciones por sección (originales del menú, adaptadas al fondo espresso)
+  var ILUS = {
+    alacarta:   "web-assets/ilus/chili.webp",
+    postres:    "web-assets/ilus/limon.webp",
+    cocteles:   "web-assets/ilus/trago.webp",
+    digestivos: "web-assets/ilus/bot1.webp",
+    espumoso:   "web-assets/ilus/bot2.webp",
+    blanco:     "web-assets/ilus/arco.webp",
+    naranja:    "web-assets/ilus/bot3.webp",
+    tinto:      "web-assets/ilus/chili.webp",
+    cervezas:   "web-assets/ilus/bot1.webp",
+    sinalcohol: "web-assets/ilus/bot2.webp"
+  };
+
   /* ============================================================
      UTILIDADES
      ============================================================ */
@@ -828,6 +847,7 @@ html { scroll-behavior: smooth; }
       return "<span><b>" + esc(tx(m.n)) + "</b> <i>" + fmt(m.p) + "</i></span>";
     }).join("");
     return '<section class="deg" id="degustacion">' +
+      '<img class="deg__hero" src="web-assets/ilus/hero.webp" alt="" loading="lazy">' +
       '<header class="deg__cab"><h2 class="deg__t">' + esc(d("degT")) + '</h2>' +
         '<p class="deg__intro">' + esc(d("degIntro")) + "</p></header>" +
       '<div class="menus">' + cards + "</div>" +
@@ -853,7 +873,8 @@ html { scroll-behavior: smooth; }
       });
       if (!cuerpo) return;
       visibles[sec.id] = true;
-      html += '<section class="acto" id="' + sec.id + '"><header class="acto__cab"><h2 class="acto__t">' + esc(tx(sec.t)) + "</h2></header>" + cuerpo + "</section>";
+      var ilu = ILUS[sec.id] ? '<img class="acto__ilus" src="' + esc(ILUS[sec.id]) + '" alt="" loading="lazy">' : "";
+      html += '<section class="acto" id="' + sec.id + '"><header class="acto__cab"><h2 class="acto__t">' + esc(tx(sec.t)) + "</h2>" + ilu + "</header>" + cuerpo + "</section>";
     });
 
     if (st.q && Object.keys(visibles).filter(function (k) { return visibles[k]; }).length === 0) {
