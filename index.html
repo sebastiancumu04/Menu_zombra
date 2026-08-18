@@ -148,6 +148,9 @@ body {
   padding: 0 var(--gut);
   color: var(--ink); display: block; opacity: .82;
 }
+/* en las cues con texto (no la portada), el bloque baja al tercio inferior
+   para no tapar el letrero/ingreso del video */
+.cue:not(.cue--portada) { align-content: end; padding-bottom: 22vh; }
 .cue__big {
   font-family: var(--serif);
   font-weight: 700;
