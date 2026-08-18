@@ -366,6 +366,7 @@ body {
   letter-spacing: .3em; text-transform: uppercase; color: var(--ink-3);
 }
 .hambre__rotulo::after { content:""; flex:1; height:1px; background: var(--hair); }
+.hambre__txt { margin: 0 0 var(--s6); font-family: var(--serif); font-style: italic; font-size: var(--fs-sm); color: var(--ink-2); max-width: 54ch; line-height: 1.6; }
 .hambre__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); margin: 0; padding: 0; list-style: none; }
 .hambre__grid li { display: flex; align-items: center; gap: var(--s4); font-size: var(--fs-sm); color: var(--ink-2); line-height: 1.4; }
 .hambre__n {
@@ -618,8 +619,9 @@ html { scroll-behavior: smooth; }
     chefQuote:    { es: "«Para mí, cocinar es conectar. Es encontrar en cada ingrediente una historia, en cada técnica un recuerdo y en cada plato una emoción para compartir.» Chef Pablo Naranjo", en: "“For me, cooking is connecting. It is finding a story in every ingredient, a memory in every technique, and an emotion to share in every dish.” Chef Pablo Naranjo" },
     legal:        { es: "El exceso de alcohol es perjudicial para la salud. Prohíbase el expendio de bebidas embriagantes a menores de edad.", en: "Excessive alcohol consumption is harmful to your health. The sale of alcoholic beverages to minors is prohibited." },
     degT:         { es: "Degustación", en: "Tasting" },
-    degIntro:     { es: "Nuestro menú de degustación: soñamos con hacerlos viajar a través de nuestros sabores, apoyándonos en platos insignia de la carta y en creaciones que surgen día a día.", en: "Our tasting menu: we dream of taking you on a journey through our flavors, drawing on both signature dishes and creations that emerge day by day." },
-    hambreRotulo: { es: "Cuánta hambre tenés — decínoslo", en: "How hungry are you — let us know" },
+    degIntro:     { es: "Este es nuestro menú de degustación con el que soñamos poder darles gusto, hacerlos viajar a través de nuestros sabores, apoyándonos tanto en platos insignia de nuestra carta como en creaciones que surgen en el día a día!", en: "This is our tasting menu, with which we dream of delighting you, taking you on a journey through our flavors, based on both signature dishes from our menu and creations that emerge daily!" },
+    comoFunciona: { es: "¿Cómo funciona?", en: "How does it work?" },
+    comoFuncionaTxt: { es: "La idea es poderlos hacer probar una gran variedad de creaciones a lo largo de esta experiencia. Por esa razón creamos 4 símbolos que representan qué tanta hambre tienen a lo largo de nuestro menú! Así sabremos qué tanta comida ir preparando para ustedes.", en: "The idea is to have you try a wide variety of creations throughout this experience. That's why we created four symbols that represent how hungry you are throughout our menu! This way, we'll know how much food to prepare for you." },
     maridajeRot:  { es: "Maridaje", en: "Pairing" }
   };
 
@@ -632,10 +634,10 @@ html { scroll-behavior: smooth; }
       { n: { es: "Degustación — 8 tiempos", en: "Tasting menu — 8 courses" }, p: 280000 }
     ],
     hambre: [
-      { es: "Estoy muriendo del hambre", en: "I'm starving" },
-      { es: "Quisiera seguir comiendo platos de sal", en: "I would like to continue with savoury dishes" },
-      { es: "Me queda un tris de hambre: ¡quiero postre!", en: "I'm still a bit hungry: I want dessert" },
-      { es: "Estoy satisfecho/a", en: "I'm satisfied" }
+      { es: "Estoy muriendo del hambre.", en: "I'm starving" },
+      { es: "Quisiera seguir comiendo platos de sal.", en: "I would like to continue with savoury dishes" },
+      { es: "Me queda un tris de hambre: ¡Quiero postre!", en: "I'm still a bit hungry: I want dessert" },
+      { es: "Estoy satisfecho/a.", en: "I'm satisfied" }
     ],
     maridaje: [
       { n: { es: "6 tiempos", en: "6 courses" }, p: 220000 },
@@ -680,12 +682,12 @@ html { scroll-behavior: smooth; }
       { i:[
         { n:"Bloody Zombra", d:{es:"Absolut Vodka, tomate clarificado, cítricos y rocoto lactofermentado", en:"Absolut Vodka, clarified tomato, citrus, fermented rocoto chili peppers"}, p:45000 },
         { n:"Guaro Old Fashioned", d:{es:"Aguardiente Cumbé, Johnnie Walker, amargos de cacao y café", en:"Aguardiente Cumbé, Johnnie Walker, cacao bitters and coffee"}, p:50000 },
-        { n:"Tequila Pepper", d:{es:"Tequila Centenario, sirope de pimientas y hierbas, limón mandarino y soda", en:"Centenario tequila, pepper herb syrup, mandarino lime and soda"}, p:48000 },
+        { n:"Tequila Pepper", d:{es:"Tequila Centenario, sirope de pimientas hierbas, limón mandarino y soda", en:"Centenario tequila, pepper herb syrup, mandarino lime and soda"}, p:48000 },
         { n:{es:"No Soy un Gin Tonic", en:"I'm not a Gin Tonic"}, d:{es:"Gin Selva, condimento de limón, soda de coco Juniper", en:"Selva Gin, bitter lime seasoning, Juniper coconut soda"}, p:50000 },
         { n:{es:"Viche Cítrico", en:"Citrus Viche"}, d:{es:"Viche Mano de Buey, cáscaras de cítricos, sirope de cardamomo y limón mandarino", en:"Mano de Buey Viche, citrus peels, cardamom syrup and mandarin lime"}, p:45000 },
         { n:"Zombra Mule", d:{es:"Viche Mano de Buey, soda de jengibre fermentada y tomillo ahumado", en:"Mano de Buey Viche, fermented ginger soda and smoked thyme"}, p:45000 },
-        { n:{es:"Amor en la Zombra", en:"Love in the Zombra"}, d:{es:"Viche Mano de Buey, campari, cordial de remolacha y clavo, soda", en:"Mano de Buey Viche, Campari, beetroot and clove cordial, soda"}, p:45000 },
-        { n:{es:"Tomate Martini", en:"Tomato Martini"}, d:{es:"Gin Selva, agua de tomate y aceite de albahaca", en:"Selva Gin, tomato water and basil oil"}, p:48000 }
+        { n:{es:"Amor en la Zombra", en:"Love in the Zombra"}, d:{es:"Viche Mano de Buey, campari, cordial de remolacha/clavo, soda", en:"Mano de Buey Viche, Campari, beetroot, clove cordial and soda"}, p:45000 },
+        { n:{es:"Tomate Martini", en:"Tomato Martini"}, d:{es:"Gin Selva, agua de tomate, aceite de albahaca", en:"Selva Gin, tomato water and basil oil"}, p:48000 }
       ]}
     ]},
     { id:"digestivos", t:{es:"Digestivos", en:"Digestives"}, g:[
@@ -745,8 +747,8 @@ html { scroll-behavior: smooth; }
       { i:[
         { n:"San Pellegrino 505 ml", p:35000 },
         { n:"Acqua Panna 505 ml", p:20000 },
-        { n:{es:"Agua (pequeña / grande)", en:"Water (small / large)"}, p:[12000,24000] },
-        { n:{es:"Agua con gas (pequeña / grande)", en:"Sparkling water (small / large)"}, p:[12000,24000] },
+        { n:{es:"Agua", en:"Water small / large"}, p:[12000,24000] },
+        { n:{es:"Agua con gas", en:"Sparkling water small / large"}, p:[12000,24000] },
         { n:{es:"Sodas (jengibre / pepino / lulo / durazno)", en:"Flavored sodas (ginger / cucumber / lulo / peach)"}, p:12000 },
         { n:"Guandolito", p:12000 },
         { n:{es:"Infusión flor de Jamaica y pasiflora", en:"Hibiscus and passionflower infusion"}, p:14000 },
@@ -822,7 +824,8 @@ html { scroll-behavior: smooth; }
       '<header class="deg__cab"><h2 class="deg__t">' + esc(d("degT")) + '</h2>' +
         '<p class="deg__intro">' + esc(d("degIntro")) + "</p></header>" +
       '<div class="menus">' + cards + "</div>" +
-      '<div class="hambre"><p class="hambre__rotulo">' + esc(d("hambreRotulo")) + "</p>" +
+      '<div class="hambre"><p class="hambre__rotulo">' + esc(d("comoFunciona")) + "</p>" +
+        '<p class="hambre__txt">' + esc(d("comoFuncionaTxt")) + "</p>" +
         '<ul class="hambre__grid">' + hambre + "</ul>" +
         '<div class="maridaje"><b style="color:var(--ink-3);font-weight:500;letter-spacing:.2em;text-transform:uppercase;font-size:var(--fs-micro)">' + esc(d("maridajeRot")) + "</b>" + maridaje + "</div>" +
       "</div></section>";
