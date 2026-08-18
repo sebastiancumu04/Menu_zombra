@@ -141,7 +141,13 @@ body {
   opacity: 0; will-change: opacity, transform;
   text-shadow: 0 1px 3px rgba(0,0,0,.92), 0 8px 40px rgba(0,0,0,.85);
 }
-.cue .label { color: var(--ink); display: block; opacity: .82; }
+.cue .label {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + 10vh);
+  left: 0; right: 0;
+  padding: 0 var(--gut);
+  color: var(--ink); display: block; opacity: .82;
+}
 .cue__big {
   font-family: var(--serif);
   font-weight: 700;
