@@ -7,3 +7,4 @@ carta-inline.html
 # Node / logs
 node_modules/
 *.log
+.vercel
