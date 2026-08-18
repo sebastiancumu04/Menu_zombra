@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#0E0B08">
 <meta name="description" content="Carta de Zombra — cocina singular del chef Pablo Naranjo en El Poblado, Medellín. Un viaje entre lo familiar y lo inesperado.">
 <title>Zombra</title>
 <link rel="icon" href="web-assets/icono.webp" type="image/webp">
@@ -28,18 +28,18 @@
 @font-face { font-family:"Playfair Display"; font-style:italic; font-weight:400; font-display:swap; src:url("web-assets/fonts/playfair-italic-400.woff2") format("woff2"); }
 
 :root {
-  --void:      #000000;
-  --void-2:    #0B0B0C;
-  --void-3:    #151517;
-  --hair:      rgba(255,255,255,.12);
-  --hair-2:    rgba(255,255,255,.06);
-  --ink:       #F2F2F2;   /* blanco de marca, neutro (B&N frío) */
-  --ink-2:     #BBBBBB;   /* gris muted, tomado del sitio */
-  --ink-3:     #8C8C8C;
-  --red:       #E1111A;   /* rojo de marca: acentos, filos, latido */
-  --red-2:     #FF3B42;   /* rojo para texto chico sobre negro (AA) */
-  --red-deep:  #7C0A10;
-  --glow:      rgba(225,17,26,.30);
+  --void:      #0E0B08;
+  --void-2:    #17120D;
+  --void-3:    #221A12;
+  --hair:      rgba(245,238,226,.12);
+  --hair-2:    rgba(245,238,226,.06);
+  --ink:       #F1EBDF;   /* blanco de marca, neutro (B&N frío) */
+  --ink-2:     #B9AE9C;   /* gris muted, tomado del sitio */
+  --ink-3:     #8B8272;
+  --gold:       #D9A441;   /* rojo de marca: acentos, filos, latido */
+  --gold-2:     #EAC069;   /* rojo para texto chico sobre negro (AA) */
+  --gold-deep:  #7A5A22;
+  --glow:      rgba(217,164,65,.30);
 
   --sans:  "Heebo", "Helvetica Neue", Helvetica, system-ui, -apple-system, sans-serif;
   --serif: "Playfair Display", "Hoefler Text", "Iowan Old Style", Georgia, serif;
@@ -73,7 +73,7 @@ body::before {
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,.05) 0%, transparent 42%),
+    radial-gradient(120% 80% at 50% -10%, rgba(245,238,226,.05) 0%, transparent 42%),
     var(--void);
 }
 
@@ -89,7 +89,7 @@ body {
   overflow-x: hidden;
 }
 
-:focus-visible { outline: 2px solid var(--red-2); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--gold-2); outline-offset: 3px; }
 
 .label {
   font-family: var(--sans);
@@ -177,7 +177,7 @@ body {
 }
 .cue--portada .bar {
   width: 46px; height: 2px;
-  background: var(--red);
+  background: var(--gold);
   margin: var(--s5) auto;
   box-shadow: 0 0 18px var(--glow);
 }
@@ -194,7 +194,7 @@ body {
   z-index: 91;
   background: rgba(0,0,0,.5);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,.26);
+  border: 1px solid rgba(245,238,226,.26);
   color: var(--ink);
   font-family: var(--sans);
   font-size: var(--fs-micro); font-weight: 500;
@@ -202,12 +202,12 @@ body {
   padding: 14px 18px; cursor: pointer;
   transition: opacity .45s var(--ease), border-color .25s, background .25s, color .25s;
 }
-.omitir:hover { border-color: var(--red); background: rgba(225,17,26,.14); color: #fff; }
+.omitir:hover { border-color: var(--gold); background: rgba(217,164,65,.14); color: #fff; }
 
 .bar-top {
   position: fixed; left: 0; top: 0;
   height: 2px; width: 0;
-  background: var(--red);
+  background: var(--gold);
   box-shadow: 0 0 14px var(--glow);
   z-index: 90;
 }
@@ -229,12 +229,12 @@ body {
 .pista i {
   display: block; position: relative; overflow: hidden;
   width: 1px; height: 52px; margin: var(--s4) auto 0;
-  background: rgba(255,255,255,.18);
+  background: rgba(245,238,226,.18);
 }
 .pista i::after {
   content: ""; position: absolute; left: 0; right: 0; top: 0;
   height: 45%;
-  background: linear-gradient(180deg, transparent, var(--red-2));
+  background: linear-gradient(180deg, transparent, var(--gold-2));
   box-shadow: 0 0 8px var(--glow);
   animation: caer 1.9s cubic-bezier(.5,0,.5,1) infinite;
 }
@@ -257,7 +257,7 @@ body {
 /* --- cabecera --- */
 .cabecera { padding: var(--s9) var(--gut) var(--s7); text-align: center; }
 .cabecera .marca { width: min(60vw, 288px); height: auto; display: block; margin: 0 auto; }
-.cabecera .bar { width: 38px; height: 2px; background: var(--red); margin: var(--s5) auto; box-shadow: 0 0 16px var(--glow); }
+.cabecera .bar { width: 38px; height: 2px; background: var(--gold); margin: var(--s5) auto; box-shadow: 0 0 16px var(--glow); }
 .cabecera p {
   font-family: var(--serif); font-style: italic;
   font-size: var(--fs-md); color: var(--ink-2);
@@ -279,13 +279,13 @@ body {
 }
 .punto {
   width: 7px; height: 7px; border-radius: 50%;
-  background: var(--red); animation: latir 2.8s ease-out infinite;
+  background: var(--gold); animation: latir 2.8s ease-out infinite;
 }
 .punto--off { background: var(--ink-3); animation: none; }
 @keyframes latir {
-  0% { box-shadow: 0 0 0 0 rgba(225,17,26,.6); }
-  70% { box-shadow: 0 0 0 10px rgba(225,17,26,0); }
-  100% { box-shadow: 0 0 0 0 rgba(225,17,26,0); }
+  0% { box-shadow: 0 0 0 0 rgba(217,164,65,.6); }
+  70% { box-shadow: 0 0 0 10px rgba(217,164,65,0); }
+  100% { box-shadow: 0 0 0 0 rgba(217,164,65,0); }
 }
 .servicio__deg {
   font-family: var(--sans); font-size: var(--fs-micro); font-weight: 500;
@@ -302,7 +302,7 @@ body {
   border-bottom: 1px solid var(--hair);
 }
 .barra { display: flex; align-items: center; gap: var(--s4); padding: var(--s4) var(--gut); }
-.barra svg { flex: none; color: var(--red-2); }
+.barra svg { flex: none; color: var(--gold-2); }
 #q {
   flex: 1; min-width: 0; background: transparent; border: 0; color: var(--ink);
   font-family: var(--serif); font-size: var(--fs-md); padding: var(--s1) 0;
@@ -324,7 +324,7 @@ body {
   letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3);
   transition: color .2s, background .2s;
 }
-.idioma button[aria-pressed="true"] { color: #fff; background: var(--red); }
+.idioma button[aria-pressed="true"] { color: var(--void); background: var(--gold); }
 
 .tamiz {
   display: flex; gap: var(--s5); padding: 0 var(--gut) var(--s4);
@@ -341,23 +341,23 @@ body {
   border-bottom: 2px solid transparent; white-space: nowrap;
   transition: color .2s, border-color .2s;
 }
-.tamiz button:hover { color: var(--ink); border-bottom-color: var(--red-deep); }
+.tamiz button:hover { color: var(--ink); border-bottom-color: var(--gold-deep); }
 .tamiz button[hidden] { display: none; }
 
 /* --- degustación: la firma de la casa --- */
 .deg { padding-top: var(--s9); }
-.deg__cab { padding: 0 var(--gut) var(--s6); border-bottom: 1px solid var(--red-deep); margin: 0 0 var(--s2); }
+.deg__cab { padding: 0 var(--gut) var(--s6); border-bottom: 1px solid var(--gold-deep); margin: 0 0 var(--s2); }
 .deg__t { font-family: var(--serif); font-weight: 700; font-size: var(--fs-2xl); line-height: 1; margin: 0; color: var(--ink); }
 .deg__intro { font-family: var(--serif); font-style: italic; font-size: var(--fs-md); color: var(--ink-2); margin: var(--s4) 0 0; max-width: 46ch; line-height: 1.55; }
 
 .menus { display: grid; gap: var(--s4); padding: var(--s7) var(--gut) 0; }
 .menu-card {
-  border: 1px solid var(--hair); border-left: 2px solid var(--red);
+  border: 1px solid var(--hair); border-left: 2px solid var(--gold);
   background: var(--void-2); padding: var(--s5) var(--s6);
   display: flex; align-items: baseline; justify-content: space-between; gap: var(--s4);
 }
 .menu-card__n { font-family: var(--serif); font-size: var(--fs-md); line-height: 1.3; margin: 0; }
-.menu-card__p { font-family: var(--sans); font-weight: 500; font-size: var(--fs-md); color: var(--red-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.menu-card__p { font-family: var(--sans); font-weight: 500; font-size: var(--fs-md); color: var(--gold-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
 .hambre { padding: var(--s8) var(--gut) 0; }
 .hambre__rotulo {
@@ -367,13 +367,16 @@ body {
 }
 .hambre__rotulo::after { content:""; flex:1; height:1px; background: var(--hair); }
 .hambre__txt { margin: 0 0 var(--s6); font-family: var(--serif); font-style: italic; font-size: var(--fs-sm); color: var(--ink-2); max-width: 54ch; line-height: 1.6; }
-.hambre__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); margin: 0; padding: 0; list-style: none; }
+.hambre__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s6) var(--s5); margin: 0; padding: 0; list-style: none; }
 .hambre__grid li { display: flex; align-items: center; gap: var(--s4); font-size: var(--fs-sm); color: var(--ink-2); line-height: 1.4; }
-.hambre__n {
-  flex: none; width: 34px; height: 34px; border-radius: 50%;
-  border: 1px solid var(--red-deep); color: var(--red-2);
-  display: grid; place-items: center;
-  font-family: var(--serif); font-size: var(--fs-md); font-weight: 600;
+.hambre__ico {
+  flex: none; width: 60px; height: auto; display: block;
+  border-radius: 10px; border: 1px solid var(--hair);
+}
+.hambre__lbl { display: block; }
+.hambre__num {
+  display: block; font-family: var(--serif); font-weight: 700;
+  font-size: var(--fs-lg); color: var(--gold); line-height: 1; margin-bottom: 3px;
 }
 .maridaje {
   margin: var(--s7) 0 0; padding: var(--s5) var(--gut) 0;
@@ -383,11 +386,11 @@ body {
 }
 .maridaje span { display: inline-flex; gap: var(--s2); align-items: baseline; }
 .maridaje b { color: var(--ink); font-weight: 500; }
-.maridaje i { color: var(--red-2); font-style: normal; font-variant-numeric: tabular-nums; }
+.maridaje i { color: var(--gold-2); font-style: normal; font-variant-numeric: tabular-nums; }
 
 /* --- secciones --- */
 .acto { padding-top: var(--s9); }
-.acto__cab { padding: 0 var(--gut) var(--s6); border-bottom: 1px solid var(--red-deep); margin: 0 0 var(--s2); }
+.acto__cab { padding: 0 var(--gut) var(--s6); border-bottom: 1px solid var(--gold-deep); margin: 0 0 var(--s2); }
 .acto__t { font-family: var(--serif); font-weight: 700; font-size: var(--fs-2xl); letter-spacing: 0; line-height: 1; margin: 0; color: var(--ink); }
 
 .grupo { padding-top: var(--s7); }
@@ -400,7 +403,7 @@ body {
 .grupo__t::after { content:""; flex:1; height:1px; background: var(--hair); }
 .grupo__nota {
   margin: 0; padding: 0 var(--gut) var(--s5);
-  font-family: var(--serif); font-style: italic; font-size: var(--fs-sm); color: var(--red-2);
+  font-family: var(--serif); font-style: italic; font-size: var(--fs-sm); color: var(--gold-2);
 }
 
 /* --- ítem --- */
@@ -421,9 +424,9 @@ body {
 .item--ver:hover .item__n, .item--ver:focus-visible .item__n { color: #fff; }
 .ver {
   margin: var(--s2) 0 0; font-family: var(--sans); font-size: var(--fs-micro);
-  font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--red-2); white-space: nowrap;
+  font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-2); white-space: nowrap;
 }
-.ver::after { content: ""; display: block; height: 1px; margin-top: 3px; background: var(--red); opacity: .5; }
+.ver::after { content: ""; display: block; height: 1px; margin-top: 3px; background: var(--gold); opacity: .5; }
 
 /* --- vino: nombre + descriptor + copa/botella --- */
 .vino {
@@ -460,15 +463,15 @@ body {
 .reverso__n { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 8vw, 2.2rem); line-height: 1.12; text-wrap: balance; }
 .reverso__d { margin: var(--s4) 0 0; font-size: var(--fs-sm); line-height: 1.66; color: var(--ink-2); max-width: 46ch; }
 .reverso__linea { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s4); margin-top: var(--s5); padding-top: var(--s4); border-top: 1px solid var(--hair); }
-.reverso__p { margin: 0; font-family: var(--sans); font-weight: 500; font-size: var(--fs-md); letter-spacing: .02em; color: var(--red-2); font-variant-numeric: tabular-nums; }
+.reverso__p { margin: 0; font-family: var(--sans); font-weight: 500; font-size: var(--fs-md); letter-spacing: .02em; color: var(--gold-2); font-variant-numeric: tabular-nums; }
 .reverso__cerrar {
   position: absolute; top: calc(var(--s4) + env(safe-area-inset-top, 0px)); right: var(--gut); z-index: 4;
   width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%;
-  border: 1px solid rgba(255,255,255,.28); background: rgba(0,0,0,.5);
+  border: 1px solid rgba(245,238,226,.28); background: rgba(0,0,0,.5);
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   color: var(--ink); cursor: pointer; padding: 0; transition: border-color .2s, background .2s;
 }
-.reverso__cerrar:hover { border-color: var(--red); background: rgba(225,17,26,.16); }
+.reverso__cerrar:hover { border-color: var(--gold); background: rgba(217,164,65,.16); }
 
 /* Safari iOS ignora overflow:hidden en body; position:fixed sí lo detiene */
 body[data-quieto="1"] { position: fixed; width: 100%; overflow: hidden; }
@@ -484,7 +487,7 @@ body[data-quieto="1"] { position: fixed; width: 100%; overflow: hidden; }
 .pie .firma { font-family: var(--serif); font-style: italic; font-size: var(--fs-sm); color: var(--ink-2); max-width: 42ch; margin: 0 auto var(--s7); line-height: 1.7; }
 .pie .firma b { display: block; font-style: normal; font-family: var(--sans); font-size: var(--fs-micro); font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-3); margin-top: var(--s3); }
 .pie p { color: var(--ink-3); font-size: var(--fs-sm); max-width: 40ch; margin: 0 auto var(--s4); line-height: 1.7; }
-.pie a { color: var(--red-2); text-decoration: none; }
+.pie a { color: var(--gold-2); text-decoration: none; }
 .pie a:hover { text-decoration: underline; }
 .pie .fina { font-size: var(--fs-micro); letter-spacing: .04em; color: var(--ink-3); }
 
@@ -634,10 +637,10 @@ html { scroll-behavior: smooth; }
       { n: { es: "Degustación — 8 tiempos", en: "Tasting menu — 8 courses" }, p: 280000 }
     ],
     hambre: [
-      { es: "Estoy muriendo del hambre.", en: "I'm starving" },
-      { es: "Quisiera seguir comiendo platos de sal.", en: "I would like to continue with savoury dishes" },
-      { es: "Me queda un tris de hambre: ¡Quiero postre!", en: "I'm still a bit hungry: I want dessert" },
-      { es: "Estoy satisfecho/a.", en: "I'm satisfied" }
+      { es: "Estoy muriendo del hambre.", en: "I'm starving", ico: "web-assets/hambre/mano-1.webp" },
+      { es: "Quisiera seguir comiendo platos de sal.", en: "I would like to continue with savoury dishes", ico: "web-assets/hambre/mano-2.webp" },
+      { es: "Me queda un tris de hambre: ¡Quiero postre!", en: "I'm still a bit hungry: I want dessert", ico: "web-assets/hambre/mano-3.webp" },
+      { es: "Estoy satisfecho/a.", en: "I'm satisfied", ico: "web-assets/hambre/mano-4.webp" }
     ],
     maridaje: [
       { n: { es: "6 tiempos", en: "6 courses" }, p: 220000 },
@@ -815,7 +818,8 @@ html { scroll-behavior: smooth; }
       return '<div class="menu-card"><p class="menu-card__n">' + esc(tx(m.n)) + '</p><p class="menu-card__p">' + fmt(m.p) + "</p></div>";
     }).join("");
     var hambre = DEG.hambre.map(function (h, i) {
-      return "<li><span class=\"hambre__n\">" + (i + 1) + "</span><span>" + esc(tx(h)) + "</span></li>";
+      return '<li><img class="hambre__ico" src="' + esc(h.ico) + '" alt="" width="158" height="251" loading="lazy">' +
+        '<span class="hambre__lbl"><span class="hambre__num">' + (i + 1) + "</span>" + esc(tx(h)) + "</span></li>";
     }).join("");
     var maridaje = DEG.maridaje.map(function (m) {
       return "<span><b>" + esc(tx(m.n)) + "</b> <i>" + fmt(m.p) + "</i></span>";
