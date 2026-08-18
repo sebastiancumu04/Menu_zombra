@@ -30,7 +30,6 @@
 :root {
   --void:      #0E0B08;
   --void-2:    #17120D;
-  --void-3:    #221A12;
   --hair:      rgba(245,238,226,.12);
   --hair-2:    rgba(245,238,226,.06);
   --ink:       #F1EBDF;   /* blanco de marca, neutro (B&N frío) */
@@ -115,7 +114,7 @@ body {
   background: #000;
 }
 
-.shot { position: absolute; inset: 0; will-change: transform; }
+.shot { position: absolute; inset: 0; will-change: transform; background: var(--void) url("web-assets/intro.jpg") center / cover no-repeat; }
 .shot video {
   position: absolute; inset: 0;
   width: 100%; height: 100%;
@@ -391,6 +390,7 @@ body {
 .maridaje span { display: inline-flex; gap: var(--s2); align-items: baseline; }
 .maridaje b { color: var(--ink); font-weight: 500; }
 .maridaje i { color: var(--gold-2); font-style: normal; font-variant-numeric: tabular-nums; }
+.maridaje .maridaje__rot { color: var(--ink-3); font-weight: 500; letter-spacing: .2em; text-transform: uppercase; font-size: var(--fs-micro); }
 
 /* --- secciones --- */
 .acto { padding-top: var(--s9); }
@@ -539,7 +539,7 @@ html { scroll-behavior: smooth; }
 
 <div class="carta" id="carta" style="padding-bottom:0">
   <header class="cabecera">
-    <h1 class="marca-wrap" style="margin:0;line-height:0"><img class="marca" src="web-assets/logo.webp" alt="Zombra" width="926" height="143"></h1>
+    <h1 style="margin:0;line-height:0"><img class="marca" src="web-assets/logo.webp" alt="Zombra" width="926" height="143"></h1>
     <div class="bar"></div>
     <p data-k="tagline"></p>
   </header>
@@ -775,6 +775,7 @@ html { scroll-behavior: smooth; }
 
   // ilustraciones por sección (originales del menú, adaptadas al fondo espresso)
   var ILUS = {
+    degustacion: "web-assets/ilus/hero.webp",
     alacarta:   "web-assets/ilus/chili.webp",
     postres:    "web-assets/ilus/limon.webp",
     cocteles:   "web-assets/ilus/trago.webp",
@@ -825,7 +826,7 @@ html { scroll-behavior: smooth; }
     var precio = '<p class="item__p">' + plata(it.p) + "</p>";
     var desc = it.d ? '<p class="item__d">' + esc(tx(it.d)) + "</p>" : "";
 
-    if (it.clip || it.foto) {
+    if (it.foto) {
       return '<article class="item item--ver" tabindex="0" role="button" aria-label="' + esc(d("ver") + " · " + tx(it.n) + " · " + plata(it.p)) + '" data-abrir="' + it._id + '">' +
         '<h4 class="item__n">' + esc(tx(it.n)) + "</h4>" +
         '<div class="item__col2">' + precio + '<p class="ver">' + d("ver") + "</p></div>" +
@@ -847,14 +848,14 @@ html { scroll-behavior: smooth; }
       return "<span><b>" + esc(tx(m.n)) + "</b> <i>" + fmt(m.p) + "</i></span>";
     }).join("");
     return '<section class="deg" id="degustacion">' +
-      '<img class="deg__hero" src="web-assets/ilus/hero.webp" alt="" loading="lazy">' +
+      '<img class="deg__hero" src="' + ILUS.degustacion + '" alt="" loading="lazy">' +
       '<header class="deg__cab"><h2 class="deg__t">' + esc(d("degT")) + '</h2>' +
         '<p class="deg__intro">' + esc(d("degIntro")) + "</p></header>" +
       '<div class="menus">' + cards + "</div>" +
       '<div class="hambre"><p class="hambre__rotulo">' + esc(d("comoFunciona")) + "</p>" +
         '<p class="hambre__txt">' + esc(d("comoFuncionaTxt")) + "</p>" +
         '<ul class="hambre__grid">' + hambre + "</ul>" +
-        '<div class="maridaje"><b style="color:var(--ink-3);font-weight:500;letter-spacing:.2em;text-transform:uppercase;font-size:var(--fs-micro)">' + esc(d("maridajeRot")) + "</b>" + maridaje + "</div>" +
+        '<div class="maridaje"><b class="maridaje__rot">' + esc(d("maridajeRot")) + "</b>" + maridaje + "</div>" +
       "</div></section>";
   }
 
@@ -988,9 +989,7 @@ html { scroll-behavior: smooth; }
   var FONDO = "#carta, .utiles, #menu, .pie";
 
   function pintaReverso(it) {
-    revMedia.innerHTML = it.clip
-      ? '<video src="' + esc(it.clip) + '" poster="' + esc(it.cartel || "") + '" muted loop playsinline autoplay preload="auto" disablepictureinpicture></video>'
-      : '<img src="' + esc(it.foto) + '" alt="' + esc(tx(it.n)) + '">';
+    revMedia.innerHTML = '<img src="' + esc(it.foto) + '" alt="' + esc(tx(it.n)) + '">';
     document.getElementById("revNombre").textContent = tx(it.n);
     document.getElementById("revDesc").textContent = it.d ? tx(it.d) : "";
     document.getElementById("revPrecio").textContent = plata(it.p);
@@ -998,7 +997,7 @@ html { scroll-behavior: smooth; }
 
   function abrirReverso(id) {
     var it = porId[id];
-    if (!it || (!it.clip && !it.foto)) return;
+    if (!it || !it.foto) return;
     revItemId = id;
     pintaReverso(it);
     scrollY = window.scrollY;
@@ -1125,6 +1124,7 @@ html { scroll-behavior: smooth; }
     quitarEntrada();
   } else {
     video.addEventListener("loadedmetadata", function () { cebar(); pintarEntrada(); }, { once: true });
+    video.addEventListener("error", function () { corriendo = false; }, { once: true });
     if (video.readyState >= 1) { cebar(); pintarEntrada(); }
     window.addEventListener("scroll", alScroll, { passive: true });
     window.addEventListener("resize", alScroll);

@@ -44,6 +44,8 @@ http
 
       const tipo = TIPOS[path.extname(file).toLowerCase()] || "application/octet-stream";
       const rango = req.headers.range;
+      // los assets se cachean para que el intro no se re-descargue en cada carga; el HTML siempre fresco
+      const cache = rel.startsWith("/web-assets/") ? "public, max-age=3600" : "no-store";
 
       // el video necesita rangos para poder buscar sin descargar todo
       if (rango) {
@@ -55,7 +57,7 @@ http
           "Content-Range": `bytes ${ini}-${fin}/${st.size}`,
           "Accept-Ranges": "bytes",
           "Content-Length": fin - ini + 1,
-          "Cache-Control": "no-store",
+          "Cache-Control": cache,
         });
         fs.createReadStream(file, { start: ini, end: fin }).pipe(res);
         return;
@@ -65,7 +67,7 @@ http
         "Content-Type": tipo,
         "Content-Length": st.size,
         "Accept-Ranges": "bytes",
-        "Cache-Control": "no-store",
+        "Cache-Control": cache,
       });
       fs.createReadStream(file).pipe(res);
     });

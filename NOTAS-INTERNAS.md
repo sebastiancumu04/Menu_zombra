@@ -40,8 +40,9 @@ auditoría marcó como defecto crítico que el comensal leyera los pendientes de
 
 La foto **no va en la lista**: vive en el **reverso**, a un toque. Mientras un plato no
 tenga material, su fila se comporta como cualquier otra — sin marca "Ver" y sin hueco.
-Para sumar una foto: agregarle `foto:"web-assets/platos/x.webp"` (o `clip:"...mp4"` +
-`cartel:"...jpg"`) al ítem en `SECCIONES`. Aparece la marca **Ver** sola.
+Para sumar una foto: agregarle `foto:"web-assets/platos/x.webp"` al ítem en `SECCIONES`;
+aparece la marca **Ver** sola. (El reverso hoy es solo foto; para sumar video a un plato,
+extender `pintaReverso` con una rama `<video>` y un campo `clip`.)
 
 ### ⚠️ Corregido: foto mal etiquetada en la fuente
 
