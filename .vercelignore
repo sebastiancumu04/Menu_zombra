@@ -1,0 +1,16 @@
+# Material fuente y másters (video en bruto, fotos originales, logos): viven en
+# el repo pero NO se publican. Sin esto, los originales quedan descargables desde
+# el dominio y cada deploy arrastra decenas de MB de más.
+Material/
+fuente/
+
+# Juego liviano: solo se usa para empaquetar el link de preview en un archivo.
+# El sitio desplegado sirve los de producción desde web-assets/.
+web-assets/demo/
+
+# Notas de trabajo, docs y herramientas locales
+NOTAS-INTERNAS.md
+README.md
+.claude/
+serve.js
+build/

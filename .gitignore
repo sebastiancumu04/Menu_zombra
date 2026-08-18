@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Preview empaquetado (se regenera con: node build/inline.js)
+carta-inline.html
+
+# Node / logs
+node_modules/
+*.log

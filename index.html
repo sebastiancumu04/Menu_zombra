@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Carta de Zombra — cocina singular del chef Pablo Naranjo en El Poblado, Medellín. Un viaje entre lo familiar y lo inesperado.">
+<title>Zombra</title>
+<link rel="icon" href="web-assets/icono.webp" type="image/webp">
+<link rel="preload" as="image" href="web-assets/logo.webp">
+<link rel="preload" as="image" href="web-assets/intro.jpg">
+
+<style>
+/* ============================================================
+   ZOMBRA — carta digital
+   El nombre es sombra. Blanco y negro con un rojo que corta.
+   Claroscuro: el negro manda, la luz cae donde importa.
+   Paleta y tipografías tomadas de la identidad real de la casa.
+   ============================================================ */
+
+/* --- tipografías de marca, incrustadas (sin depender de Google) --- */
+@font-face { font-family:"Heebo"; font-style:normal; font-weight:300; font-display:swap; src:url("web-assets/fonts/heebo-300.woff2") format("woff2"); }
+@font-face { font-family:"Heebo"; font-style:normal; font-weight:400; font-display:swap; src:url("web-assets/fonts/heebo-400.woff2") format("woff2"); }
+@font-face { font-family:"Heebo"; font-style:normal; font-weight:500; font-display:swap; src:url("web-assets/fonts/heebo-500.woff2") format("woff2"); }
+@font-face { font-family:"Playfair Display"; font-style:normal; font-weight:400; font-display:swap; src:url("web-assets/fonts/playfair-400.woff2") format("woff2"); }
+@font-face { font-family:"Playfair Display"; font-style:normal; font-weight:600; font-display:swap; src:url("web-assets/fonts/playfair-600.woff2") format("woff2"); }
+@font-face { font-family:"Playfair Display"; font-style:normal; font-weight:700; font-display:swap; src:url("web-assets/fonts/playfair-700.woff2") format("woff2"); }
+@font-face { font-family:"Playfair Display"; font-style:italic; font-weight:400; font-display:swap; src:url("web-assets/fonts/playfair-italic-400.woff2") format("woff2"); }
+
+:root {
+  --void:      #000000;
+  --void-2:    #0B0B0C;
+  --void-3:    #151517;
+  --hair:      rgba(255,255,255,.12);
+  --hair-2:    rgba(255,255,255,.06);
+  --ink:       #F2F2F2;   /* blanco de marca, neutro (B&N frío) */
+  --ink-2:     #BBBBBB;   /* gris muted, tomado del sitio */
+  --ink-3:     #8C8C8C;
+  --red:       #E1111A;   /* rojo de marca: acentos, filos, latido */
+  --red-2:     #FF3B42;   /* rojo para texto chico sobre negro (AA) */
+  --red-deep:  #7C0A10;
+  --glow:      rgba(225,17,26,.30);
+
+  --sans:  "Heebo", "Helvetica Neue", Helvetica, system-ui, -apple-system, sans-serif;
+  --serif: "Playfair Display", "Hoefler Text", "Iowan Old Style", Georgia, serif;
+
+  --fs-micro: 0.6875rem;
+  --fs-xs:    0.75rem;
+  --fs-sm:    0.8125rem;
+  --fs-base:  0.9375rem;
+  --fs-md:    1.0625rem;
+  --fs-lg:    1.25rem;
+  --fs-xl:    1.625rem;
+  --fs-2xl:   2.25rem;
+
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px;
+  --s6:32px; --s7:48px; --s8:68px; --s9:100px; --s10:140px;
+
+  --maxw: 640px;
+  --gut: clamp(20px, 6vw, 38px);
+  --ease: cubic-bezier(.19,1,.22,1);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; padding: 0; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* fondo: negro con una sola luz difusa arriba, como un foco lejano */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(255,255,255,.05) 0%, transparent 42%),
+    var(--void);
+}
+
+body {
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--fs-base);
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+:focus-visible { outline: 2px solid var(--red-2); outline-offset: 3px; }
+
+.label {
+  font-family: var(--sans);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   LA ENTRADA — una sola toma; el scroll maneja el video
+   ============================================================ */
+.entrada { position: relative; background: #000; }
+.entrada__track { height: 320vh; }
+
+.entrada__pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  height: 100svh;
+  overflow: hidden;
+  background: #000;
+}
+
+.shot { position: absolute; inset: 0; will-change: transform; }
+.shot video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  /* etalonaje horneado en el encode: nada por frame acá */
+}
+
+/* viñeta + piso para que el texto siempre gane */
+.entrada__pin::after {
+  content: "";
+  position: absolute; inset: 0;
+  z-index: 3; pointer-events: none;
+  background:
+    radial-gradient(116% 80% at 50% 42%, rgba(0,0,0,.16) 0%, rgba(0,0,0,.34) 40%, rgba(0,0,0,.86) 100%),
+    linear-gradient(180deg, rgba(0,0,0,.55) 0%, transparent 26%, transparent 52%, rgba(0,0,0,.92) 100%);
+}
+
+.cues { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+.cue {
+  position: absolute; inset: 0;
+  display: grid; place-content: center; text-align: center;
+  padding: 0 var(--gut);
+  opacity: 0; will-change: opacity, transform;
+  text-shadow: 0 1px 3px rgba(0,0,0,.92), 0 8px 40px rgba(0,0,0,.85);
+}
+.cue .label { color: var(--ink); display: block; opacity: .82; }
+.cue__big {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(2rem, 9vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -.01em;
+  margin: var(--s4) 0 0;
+  text-wrap: balance;
+}
+.cue__sub {
+  margin: var(--s4) auto 0;
+  max-width: 28ch;
+  font-family: var(--serif);
+  font-size: var(--fs-md);
+  font-style: italic;
+  color: rgba(244,244,244,.78);
+  line-height: 1.5;
+}
+
+/* portada — el logotipo de la casa */
+.cue--portada .marca { margin: 0; line-height: 0; }
+.cue--portada .marca img {
+  width: min(74vw, 360px);
+  height: auto; display: block; margin: 0 auto;
+  filter: drop-shadow(0 6px 34px rgba(0,0,0,.9));
+  will-change: transform, opacity;
+}
+.cue--portada .bar {
+  width: 46px; height: 2px;
+  background: var(--red);
+  margin: var(--s5) auto;
+  box-shadow: 0 0 18px var(--glow);
+}
+.cue--portada .sede {
+  font-size: var(--fs-micro);
+  font-weight: 500; letter-spacing: .5em; text-transform: uppercase;
+  color: rgba(244,244,244,.72); padding-left: .5em; margin: 0;
+}
+
+.omitir {
+  position: fixed;
+  right: var(--gut);
+  bottom: calc(var(--s5) + env(safe-area-inset-bottom, 0px));
+  z-index: 91;
+  background: rgba(0,0,0,.5);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.26);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--fs-micro); font-weight: 500;
+  letter-spacing: .24em; text-transform: uppercase;
+  padding: 14px 18px; cursor: pointer;
+  transition: opacity .45s var(--ease), border-color .25s, background .25s, color .25s;
+}
+.omitir:hover { border-color: var(--red); background: rgba(225,17,26,.14); color: #fff; }
+
+.bar-top {
+  position: fixed; left: 0; top: 0;
+  height: 2px; width: 0;
+  background: var(--red);
+  box-shadow: 0 0 14px var(--glow);
+  z-index: 90;
+}
+
+.pista {
+  position: absolute; left: 50%; bottom: var(--s7);
+  z-index: 6; text-align: center;
+  color: rgba(244,244,244,.72);
+  font-size: var(--fs-micro); font-weight: 500;
+  letter-spacing: .3em; text-transform: uppercase;
+  text-shadow: 0 1px 10px rgba(0,0,0,.85);
+  transition: opacity .5s var(--ease);
+  animation: llamar 2.8s ease-in-out infinite;
+}
+@keyframes llamar {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 7px); }
+}
+.pista i {
+  display: block; position: relative; overflow: hidden;
+  width: 1px; height: 52px; margin: var(--s4) auto 0;
+  background: rgba(255,255,255,.18);
+}
+.pista i::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0;
+  height: 45%;
+  background: linear-gradient(180deg, transparent, var(--red-2));
+  box-shadow: 0 0 8px var(--glow);
+  animation: caer 1.9s cubic-bezier(.5,0,.5,1) infinite;
+}
+@keyframes caer {
+  0% { transform: translateY(-110%); opacity: 0; }
+  25% { opacity: 1; } 75% { opacity: 1; }
+  100% { transform: translateY(230%); opacity: 0; }
+}
+
+/* ============================================================
+   LA CARTA
+   ============================================================ */
+.carta {
+  position: relative; z-index: 10;
+  background: transparent;
+  max-width: var(--maxw); margin: 0 auto;
+  padding-bottom: var(--s10);
+}
+
+/* --- cabecera --- */
+.cabecera { padding: var(--s9) var(--gut) var(--s7); text-align: center; }
+.cabecera .marca { width: min(60vw, 288px); height: auto; display: block; margin: 0 auto; }
+.cabecera .bar { width: 38px; height: 2px; background: var(--red); margin: var(--s5) auto; box-shadow: 0 0 16px var(--glow); }
+.cabecera p {
+  font-family: var(--serif); font-style: italic;
+  font-size: var(--fs-md); color: var(--ink-2);
+  max-width: 30ch; margin: 0 auto; line-height: 1.6; text-wrap: balance;
+}
+
+/* --- servicio / estado de la casa --- */
+.servicio {
+  padding: var(--s7) var(--gut) var(--s7);
+  text-align: center;
+  border-top: 1px solid var(--hair);
+  border-bottom: 1px solid var(--hair);
+}
+.servicio__casa {
+  margin: 0 0 var(--s5);
+  font-family: var(--sans); font-size: var(--fs-micro); font-weight: 500;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--ink);
+  display: flex; align-items: center; justify-content: center; gap: var(--s2);
+}
+.punto {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--red); animation: latir 2.8s ease-out infinite;
+}
+.punto--off { background: var(--ink-3); animation: none; }
+@keyframes latir {
+  0% { box-shadow: 0 0 0 0 rgba(225,17,26,.6); }
+  70% { box-shadow: 0 0 0 10px rgba(225,17,26,0); }
+  100% { box-shadow: 0 0 0 0 rgba(225,17,26,0); }
+}
+.servicio__deg {
+  font-family: var(--sans); font-size: var(--fs-micro); font-weight: 500;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--ink-2);
+  margin: 0;
+}
+.servicio__deg b { color: var(--ink); font-weight: 500; }
+
+/* --- utilidades: buscar + idioma --- */
+.utiles {
+  position: sticky; top: 0; z-index: 40;
+  background: rgba(0,0,0,.82);
+  backdrop-filter: blur(16px) saturate(1.2); -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  border-bottom: 1px solid var(--hair);
+}
+.barra { display: flex; align-items: center; gap: var(--s4); padding: var(--s4) var(--gut); }
+.barra svg { flex: none; color: var(--red-2); }
+#q {
+  flex: 1; min-width: 0; background: transparent; border: 0; color: var(--ink);
+  font-family: var(--serif); font-size: var(--fs-md); padding: var(--s1) 0;
+  -webkit-appearance: none; appearance: none;
+}
+#q::placeholder { color: var(--ink-3); font-style: italic; }
+#q::-webkit-search-cancel-button, #q::-webkit-search-decoration { -webkit-appearance: none; }
+#q:focus:not(:focus-visible) { outline: none; }
+
+/* conmutador de idioma */
+.idioma {
+  flex: none; display: inline-flex; align-items: stretch;
+  border: 1px solid var(--hair); border-radius: 999px; overflow: hidden;
+}
+.idioma button {
+  background: none; border: 0; cursor: pointer;
+  min-height: 44px; padding: 0 13px;
+  font-family: var(--sans); font-size: var(--fs-micro); font-weight: 500;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--ink-3);
+  transition: color .2s, background .2s;
+}
+.idioma button[aria-pressed="true"] { color: #fff; background: var(--red); }
+
+.tamiz {
+  display: flex; gap: var(--s5); padding: 0 var(--gut) var(--s4);
+  overflow-x: auto; scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%);
+          mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 34px), transparent 100%);
+}
+.tamiz::-webkit-scrollbar { display: none; }
+.tamiz button {
+  flex: none; background: none; border: 0;
+  min-height: 44px; padding: 12px 0 10px; cursor: pointer;
+  font-family: var(--sans); font-size: var(--fs-micro); font-weight: 500;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--ink-3);
+  border-bottom: 2px solid transparent; white-space: nowrap;
+  transition: color .2s, border-color .2s;
+}
+.tamiz button:hover { color: var(--ink); border-bottom-color: var(--red-deep); }
+.tamiz button[hidden] { display: none; }
+
+/* --- degustación: la firma de la casa --- */
+.deg { padding-top: var(--s9); }
+.deg__cab { padding: 0 var(--gut) var(--s6); border-bottom: 1px solid var(--red-deep); margin: 0 0 var(--s2); }
+.deg__t { font-family: var(--serif); font-weight: 700; font-size: var(--fs-2xl); line-height: 1; margin: 0; color: var(--ink); }
+.deg__intro { font-family: var(--serif); font-style: italic; font-size: var(--fs-md); color: var(--ink-2); margin: var(--s4) 0 0; max-width: 46ch; line-height: 1.55; }
+
+.menus { display: grid; gap: var(--s4); padding: var(--s7) var(--gut) 0; }
+.menu-card {
+  border: 1px solid var(--hair); border-left: 2px solid var(--red);
+  background: var(--void-2); padding: var(--s5) var(--s6);
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s4);
+}
+.menu-card__n { font-family: var(--serif); font-size: var(--fs-md); line-height: 1.3; margin: 0; }
+.menu-card__p { font-family: var(--sans); font-weight: 500; font-size: var(--fs-md); color: var(--red-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.hambre { padding: var(--s8) var(--gut) 0; }
+.hambre__rotulo {
+  display: flex; align-items: center; gap: var(--s4); margin: 0 0 var(--s5);
+  font-family: var(--sans); font-size: var(--fs-micro); font-weight: 500;
+  letter-spacing: .3em; text-transform: uppercase; color: var(--ink-3);
+}
+.hambre__rotulo::after { content:""; flex:1; height:1px; background: var(--hair); }
+.hambre__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); margin: 0; padding: 0; list-style: none; }
+.hambre__grid li { display: flex; align-items: center; gap: var(--s4); font-size: var(--fs-sm); color: var(--ink-2); line-height: 1.4; }
+.hambre__n {
+  flex: none; width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--red-deep); color: var(--red-2);
+  display: grid; place-items: center;
+  font-family: var(--serif); font-size: var(--fs-md); font-weight: 600;
+}
+.maridaje {
+  margin: var(--s7) 0 0; padding: var(--s5) var(--gut) 0;
+  border-top: 1px solid var(--hair);
+  display: flex; flex-wrap: wrap; gap: var(--s3) var(--s6);
+  font-family: var(--sans); font-size: var(--fs-sm); color: var(--ink-2);
+}
+.maridaje span { display: inline-flex; gap: var(--s2); align-items: baseline; }
+.maridaje b { color: var(--ink); font-weight: 500; }
+.maridaje i { color: var(--red-2); font-style: normal; font-variant-numeric: tabular-nums; }
+
+/* --- secciones --- */
+.acto { padding-top: var(--s9); }
+.acto__cab { padding: 0 var(--gut) var(--s6); border-bottom: 1px solid var(--red-deep); margin: 0 0 var(--s2); }
+.acto__t { font-family: var(--serif); font-weight: 700; font-size: var(--fs-2xl); letter-spacing: 0; line-height: 1; margin: 0; color: var(--ink); }
+
+.grupo { padding-top: var(--s7); }
+.grupo__t {
+  margin: 0; padding: 0 var(--gut) var(--s5);
+  font-family: var(--sans); font-size: var(--fs-micro); font-weight: 500;
+  letter-spacing: .3em; text-transform: uppercase; color: var(--ink-3);
+  display: flex; align-items: center; gap: var(--s4);
+}
+.grupo__t::after { content:""; flex:1; height:1px; background: var(--hair); }
+.grupo__nota {
+  margin: 0; padding: 0 var(--gut) var(--s5);
+  font-family: var(--serif); font-style: italic; font-size: var(--fs-sm); color: var(--red-2);
+}
+
+/* --- ítem --- */
+.item {
+  display: grid; grid-template-columns: 1fr auto; column-gap: var(--s5);
+  padding: var(--s5) var(--gut); border-top: 1px solid var(--hair-2);
+  align-items: baseline;
+  opacity: 0; transform: translateY(14px);
+  transition: opacity .55s var(--ease), transform .55s var(--ease);
+}
+.item.vista { opacity: 1; transform: none; }
+.item__n { font-family: var(--serif); font-weight: 400; font-size: var(--fs-md); line-height: 1.28; margin: 0; text-wrap: balance; }
+.item__p { font-family: var(--sans); font-weight: 500; font-size: var(--fs-sm); letter-spacing: .02em; color: var(--ink-2); font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right; }
+.item__d { grid-column: 1 / -1; margin: var(--s3) 0 0; font-size: var(--fs-sm); line-height: 1.62; color: var(--ink-2); max-width: 54ch; }
+.item__col2 { text-align: right; }
+
+.item--ver { cursor: pointer; }
+.item--ver:hover .item__n, .item--ver:focus-visible .item__n { color: #fff; }
+.ver {
+  margin: var(--s2) 0 0; font-family: var(--sans); font-size: var(--fs-micro);
+  font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--red-2); white-space: nowrap;
+}
+.ver::after { content: ""; display: block; height: 1px; margin-top: 3px; background: var(--red); opacity: .5; }
+
+/* --- vino: nombre + descriptor + copa/botella --- */
+.vino {
+  display: grid; grid-template-columns: 1fr auto; column-gap: var(--s5);
+  padding: var(--s4) var(--gut); border-top: 1px solid var(--hair-2); align-items: baseline;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.vino.vista { opacity: 1; transform: none; }
+.vino__n { font-family: var(--serif); font-size: var(--fs-base); }
+.vino__d { grid-column: 1 / -1; margin: var(--s2) 0 0; font-family: var(--sans); font-size: var(--fs-xs); color: var(--ink-3); letter-spacing: .01em; }
+.vino__precios { display: flex; gap: var(--s5); text-align: right; font-variant-numeric: tabular-nums; }
+.vino__c, .vino__b { font-family: var(--sans); font-weight: 500; font-size: var(--fs-sm); color: var(--ink-2); white-space: nowrap; }
+.vino__c { color: var(--ink-3); }
+.vino__c i, .vino__b i { font-style: normal; display: block; font-size: var(--fs-micro); letter-spacing: .18em; text-transform: uppercase; color: var(--ink-3); margin-top: 2px; }
+
+/* --- reverso a pantalla completa --- */
+.reverso {
+  position: fixed; inset: 0; z-index: 100;
+  background: var(--void);
+  display: grid; grid-template-rows: minmax(38svh, 1fr) auto;
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  opacity: 0; visibility: hidden; perspective: 1400px;
+  transition: opacity .34s var(--ease), visibility 0s linear .34s;
+}
+.reverso[data-abierto="1"] { opacity: 1; visibility: visible; transition: opacity .34s var(--ease), visibility 0s; }
+.reverso__media, .reverso__pie { transform-origin: 50% 50%; transform: rotateY(-14deg); opacity: 0; transition: transform .52s var(--ease), opacity .38s var(--ease); }
+.reverso[data-abierto="1"] .reverso__media, .reverso[data-abierto="1"] .reverso__pie { transform: none; opacity: 1; }
+.reverso[data-abierto="1"] .reverso__pie { transition-delay: .06s; }
+.reverso__media { position: relative; overflow: hidden; background: var(--void-2); }
+.reverso__media img, .reverso__media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.reverso__media::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,.35) 0%, transparent 22%, transparent 60%, var(--void) 100%); }
+.reverso__pie { padding: 0 var(--gut) calc(var(--s7) + env(safe-area-inset-bottom, 0px)); margin-top: calc(var(--s8) * -1); position: relative; z-index: 2; }
+.reverso__n { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 8vw, 2.2rem); line-height: 1.12; text-wrap: balance; }
+.reverso__d { margin: var(--s4) 0 0; font-size: var(--fs-sm); line-height: 1.66; color: var(--ink-2); max-width: 46ch; }
+.reverso__linea { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s4); margin-top: var(--s5); padding-top: var(--s4); border-top: 1px solid var(--hair); }
+.reverso__p { margin: 0; font-family: var(--sans); font-weight: 500; font-size: var(--fs-md); letter-spacing: .02em; color: var(--red-2); font-variant-numeric: tabular-nums; }
+.reverso__cerrar {
+  position: absolute; top: calc(var(--s4) + env(safe-area-inset-top, 0px)); right: var(--gut); z-index: 4;
+  width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.28); background: rgba(0,0,0,.5);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  color: var(--ink); cursor: pointer; padding: 0; transition: border-color .2s, background .2s;
+}
+.reverso__cerrar:hover { border-color: var(--red); background: rgba(225,17,26,.16); }
+
+/* Safari iOS ignora overflow:hidden en body; position:fixed sí lo detiene */
+body[data-quieto="1"] { position: fixed; width: 100%; overflow: hidden; }
+
+/* --- vacío --- */
+.vacio { padding: var(--s10) var(--gut); text-align: center; }
+.vacio b { display: block; font-family: var(--serif); font-weight: 400; font-size: var(--fs-lg); margin-bottom: var(--s3); }
+.vacio p { color: var(--ink-2); font-size: var(--fs-sm); margin: 0; }
+
+/* --- pie --- */
+.pie { margin-top: var(--s10); padding: var(--s8) var(--gut) 0; border-top: 1px solid var(--hair); text-align: center; }
+.pie .lema { font-family: var(--serif); font-style: italic; font-size: var(--fs-lg); margin: 0 0 var(--s5); color: var(--ink); }
+.pie .firma { font-family: var(--serif); font-style: italic; font-size: var(--fs-sm); color: var(--ink-2); max-width: 42ch; margin: 0 auto var(--s7); line-height: 1.7; }
+.pie .firma b { display: block; font-style: normal; font-family: var(--sans); font-size: var(--fs-micro); font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-3); margin-top: var(--s3); }
+.pie p { color: var(--ink-3); font-size: var(--fs-sm); max-width: 40ch; margin: 0 auto var(--s4); line-height: 1.7; }
+.pie a { color: var(--red-2); text-decoration: none; }
+.pie a:hover { text-decoration: underline; }
+.pie .fina { font-size: var(--fs-micro); letter-spacing: .04em; color: var(--ink-3); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+  .item, .vino { opacity: 1; transform: none; }
+}
+html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<section class="entrada" id="entrada">
+  <div class="entrada__pin">
+    <div class="shot" data-shot>
+      <video src="web-assets/intro.mp4" poster="web-assets/intro.jpg" muted playsinline preload="auto" disablepictureinpicture></video>
+    </div>
+    <div class="cues">
+      <div class="cue cue--portada" data-cue>
+        <div class="marca"><img src="web-assets/logo.webp" alt="Zombra"></div>
+        <div class="bar"></div>
+        <p class="sede">El Poblado · Medellín</p>
+      </div>
+      <div class="cue" data-cue>
+        <span class="label" data-k="introEyebrow"></span>
+        <p class="cue__big" data-k="introFrase"></p>
+      </div>
+      <div class="cue" data-cue>
+        <span class="label" data-k="introChef"></span>
+        <p class="cue__big" data-k="introCierre"></p>
+        <p class="cue__sub" data-k="introSub"></p>
+      </div>
+    </div>
+    <div class="pista" id="pista"><span data-k="pista"></span><i></i></div>
+  </div>
+  <div class="entrada__track"></div>
+</section>
+
+<div class="bar-top" id="barTop"></div>
+<button class="omitir" id="omitir" data-k="omitir"></button>
+
+<div class="carta" id="carta" style="padding-bottom:0">
+  <header class="cabecera">
+    <h1 class="marca-wrap" style="margin:0;line-height:0"><img class="marca" src="web-assets/logo.webp" alt="Zombra" width="926" height="143"></h1>
+    <div class="bar"></div>
+    <p data-k="tagline"></p>
+  </header>
+
+  <section class="servicio">
+    <p class="servicio__casa"><span class="punto" id="punto"></span><span id="estado"></span></p>
+    <p class="servicio__deg" data-k="degHoras"></p>
+  </section>
+</div>
+
+<div class="utiles">
+  <div class="barra">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+      <circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.6-3.6"></path>
+    </svg>
+    <input id="q" type="search" autocapitalize="none" autocorrect="off" spellcheck="false" enterkeyhint="search" data-k-ph="buscarPh" data-k-aria="buscarAria">
+    <div class="idioma" role="group" data-k-aria="idiomaAria">
+      <button data-lang="es" aria-pressed="true">ES</button>
+      <button data-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+  <nav class="tamiz" id="tamiz" data-k-aria="navAria"></nav>
+</div>
+
+<main id="menu" class="carta" style="padding-bottom:0"></main>
+<p id="liveResults" class="sr-only" role="status" aria-live="polite"></p>
+
+<footer class="pie carta" style="padding-bottom:var(--s10)">
+  <p class="lema" data-k="tagline"></p>
+  <p class="firma" data-k="chefQuote"></p>
+  <p data-k="footerHoras"></p>
+  <p data-k="footerDir"></p>
+  <p><a id="lkIg" href="https://www.instagram.com/zombra.mde/" target="_blank" rel="noopener">@zombra.mde</a> &nbsp;·&nbsp; <a id="lkResv" href="https://zombra.precompro.com/select/" target="_blank" rel="noopener" data-k="reservar"></a></p>
+  <p><a href="https://wa.link/tjs0k0" target="_blank" rel="noopener">WhatsApp 300 4937348</a> &nbsp;·&nbsp; <a href="mailto:info@zombra.com.co">info@zombra.com.co</a></p>
+  <p class="fina" data-k="legal"></p>
+</footer>
+
+<div class="reverso" id="reverso" role="dialog" aria-modal="true" aria-labelledby="revNombre" data-abierto="0">
+  <button class="reverso__cerrar" id="revCerrar" data-k-aria="volver">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+  </button>
+  <div class="reverso__media" id="revMedia"></div>
+  <div class="reverso__pie">
+    <h2 class="reverso__n" id="revNombre"></h2>
+    <p class="reverso__d" id="revDesc"></p>
+    <div class="reverso__linea">
+      <p class="reverso__p" id="revPrecio"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var poco = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var LANG = "es";
+
+  /* ============================================================
+     DICCIONARIO — todos los textos de interfaz salen de acá
+     ============================================================ */
+  var DICT = {
+    introEyebrow: { es: "Cocina singular · Chef Pablo Naranjo", en: "Singular cuisine · Chef Pablo Naranjo" },
+    introFrase:   { es: "Un viaje entre lo\nfamiliar y lo inesperado", en: "A journey between the\nfamiliar and the unexpected" },
+    introChef:    { es: "Para nosotros, cocinar es conectar", en: "For us, cooking is connecting" },
+    introCierre:  { es: "Y ahora,\nla carta", en: "And now,\nthe menu" },
+    introSub:     { es: "El Poblado, Medellín.", en: "El Poblado, Medellín." },
+    pista:        { es: "Deslizá para entrar", en: "Scroll to enter" },
+    omitir:       { es: "Omitir intro", en: "Skip intro" },
+    tagline:      { es: "Un viaje entre lo familiar y lo inesperado", en: "A journey between the familiar and the unexpected" },
+    buscarPh:     { es: "Buscá un plato, un vino, un trago…", en: "Search a dish, a wine, a drink…" },
+    buscarAria:   { es: "Buscar en la carta", en: "Search the menu" },
+    idiomaAria:   { es: "Cambiar idioma", en: "Change language" },
+    navAria:      { es: "Secciones de la carta", en: "Menu sections" },
+    copa:         { es: "Copa", en: "Glass" },
+    botella:      { es: "Botella", en: "Bottle" },
+    ver:          { es: "Ver", en: "View" },
+    volver:       { es: "Volver a la carta", en: "Back to the menu" },
+    vacioT:       { es: "No encontramos nada", en: "Nothing found" },
+    vacioP:       { es: "Probá con otra palabra.", en: "Try another word." },
+    abierto:      { es: "Abierto ahora", en: "Open now" },
+    cerrado:      { es: "Cerrado ahora", en: "Closed now" },
+    abre:         { es: "Abrimos a las 12:00", en: "We open at 12:00" },
+    domingo:      { es: "Hoy cerrado · domingo", en: "Closed today · Sunday" },
+    degHoras:     { es: "Servicio de degustación · 12:00–14:00 · 18:00–21:00", en: "Tasting service · 12:00–14:00 · 18:00–21:00" },
+    reservar:     { es: "Reservar", en: "Book now" },
+    footerHoras:  { es: "Lunes a sábado · 12:00 – 22:00\nMenú del día: lunes a viernes, 12:00–14:00 · $65.000", en: "Monday to Saturday · 12:00 – 22:00\nSet lunch: Monday to Friday, 12:00–14:00 · $65,000" },
+    footerDir:    { es: "Carrera 40 #10a-22 · El Poblado · Medellín", en: "Carrera 40 #10a-22 · El Poblado · Medellín" },
+    chefQuote:    { es: "«Para mí, cocinar es conectar. Es encontrar en cada ingrediente una historia, en cada técnica un recuerdo y en cada plato una emoción para compartir.» Chef Pablo Naranjo", en: "“For me, cooking is connecting. It is finding a story in every ingredient, a memory in every technique, and an emotion to share in every dish.” Chef Pablo Naranjo" },
+    legal:        { es: "El exceso de alcohol es perjudicial para la salud. Prohíbase el expendio de bebidas embriagantes a menores de edad.", en: "Excessive alcohol consumption is harmful to your health. The sale of alcoholic beverages to minors is prohibited." },
+    degT:         { es: "Degustación", en: "Tasting" },
+    degIntro:     { es: "Nuestro menú de degustación: soñamos con hacerlos viajar a través de nuestros sabores, apoyándonos en platos insignia de la carta y en creaciones que surgen día a día.", en: "Our tasting menu: we dream of taking you on a journey through our flavors, drawing on both signature dishes and creations that emerge day by day." },
+    hambreRotulo: { es: "Cuánta hambre tenés — decínoslo", en: "How hungry are you — let us know" },
+    maridajeRot:  { es: "Maridaje", en: "Pairing" }
+  };
+
+  /* ============================================================
+     DEGUSTACIÓN — la firma de la casa (verbatim del menú)
+     ============================================================ */
+  var DEG = {
+    menus: [
+      { n: { es: "Degustación — hasta alcanzar su nivel de satisfacción", en: "Tasting menu — until your appetite is satisfied" }, p: 350000 },
+      { n: { es: "Degustación — 8 tiempos", en: "Tasting menu — 8 courses" }, p: 280000 }
+    ],
+    hambre: [
+      { es: "Estoy muriendo del hambre", en: "I'm starving" },
+      { es: "Quisiera seguir comiendo platos de sal", en: "I would like to continue with savoury dishes" },
+      { es: "Me queda un tris de hambre: ¡quiero postre!", en: "I'm still a bit hungry: I want dessert" },
+      { es: "Estoy satisfecho/a", en: "I'm satisfied" }
+    ],
+    maridaje: [
+      { n: { es: "6 tiempos", en: "6 courses" }, p: 220000 },
+      { n: { es: "8 tiempos", en: "8 courses" }, p: 260000 }
+    ]
+  };
+
+  /* ============================================================
+     LA CARTA — estructura y textos verbatim del menú (ES/EN).
+     A LA CARTA es una sola sección plana, tal como el impreso.
+     ============================================================ */
+  var SECCIONES = [
+    { id:"alacarta", t:{es:"A la carta", en:"À la carte"}, g:[
+      { i:[
+        { n:{es:"Ceviche de hongos / cítricos", en:"Mushroom ceviche / citrus"}, p:30000 },
+        { n:{es:"Crudo de atún / quinoa / curuba", en:"Tuna crudo / quinoa / curuba"}, p:43000, foto:"web-assets/platos/crudo-atun.webp" },
+        { n:{es:"San Marzano / albahaca", en:"San Marzano / basil"}, p:33000, foto:"web-assets/platos/san-marzano.webp" },
+        { n:{es:"Cebolla ocañera en texturas / marañón", en:"Ocañera onion in textures / cashew nut"}, p:30000 },
+        { n:{es:"Cogollos / ajonjolí / tocino / paipa", en:"Baby lettuce / sesame / bacon / paipa"}, p:33000 },
+        { n:{es:"Huevo pochado / kale / pera", en:"Poached egg / kale / pear"}, p:30000 },
+        { n:{es:"Pesca blanca / palak paneer / feijoa", en:"White fish / palak paneer / feijoa"}, p:49000, foto:"web-assets/platos/pesca-blanca.webp" },
+        { n:{es:"Pesca del día / CBD / pimientones", en:"Catch of the day / CBD / bell peppers"}, p:47000 },
+        { n:{es:"Langosta / papa orgánica / kimchi de cidra", en:"Lobster / organic potato / guatila kimchi"}, p:[90000,180000], foto:"web-assets/platos/langosta.webp" },
+        { n:{es:"Contramuslo / chorizo / mostaza", en:"Chicken thigh / chorizo / mustard"}, p:47000 },
+        { n:{es:"Chuleta de cerdo 450g / duraznos / hierbas frescas", en:"Pork chop 450g / peaches / fresh herbs"}, p:110000, foto:"web-assets/platos/chuleta.webp" },
+        { n:{es:"Goulash de carrillera / nokedli / yogurt griego", en:"Pork cheeks goulash / nokedli / greek yogurt"}, p:49000, foto:"web-assets/platos/goulash.webp" },
+        { n:{es:"Tocino / atún curado / guayaba / cebolla brûlée", en:"Bacon / cured tuna / guava / onion brûlée"}, p:47000 },
+        { n:{es:"Pablodelle / lengua / paipa", en:"Pablodelle / tongue / paipa"}, p:49000, foto:"web-assets/platos/pablodelle.webp" },
+        { n:{es:"Entrecote 350g / demiglace 12.06.23 / baba ganoush", en:"Entrecôte 350g / demiglace 12.06.23 / baba ganoush"}, p:110000, foto:"web-assets/platos/entrecote.webp" }
+      ]}
+    ]},
+    { id:"postres", t:{es:"Postres", en:"Desserts"}, g:[
+      { i:[
+        { n:{es:"Vainilla / caramelo salado / puerro / maní", en:"Vanilla / salted caramel / leek / peanut"}, p:30000 },
+        { n:{es:"La remolacha", en:"Beetroot"}, p:30000 },
+        { n:{es:"Mandarina / limonaria / galleta cuca / crema", en:"Mandarin / lemon / cuca cookie / cream"}, p:30000 },
+        { n:{es:"Chocolate / café / crema de mambe", en:"Chocolate / coffee / mambe cream"}, p:32000 },
+        { n:{es:"Pepino / granadilla / albahaca / pimienta", en:"Cucumber / granadilla / basil / black pepper"}, p:30000 }
+      ]}
+    ]},
+    { id:"cocteles", t:{es:"Cócteles", en:"Cocktails"}, g:[
+      { i:[
+        { n:"Bloody Zombra", d:{es:"Absolut Vodka, tomate clarificado, cítricos y rocoto lactofermentado", en:"Absolut Vodka, clarified tomato, citrus, fermented rocoto chili peppers"}, p:45000 },
+        { n:"Guaro Old Fashioned", d:{es:"Aguardiente Cumbé, Johnnie Walker, amargos de cacao y café", en:"Aguardiente Cumbé, Johnnie Walker, cacao bitters and coffee"}, p:50000 },
+        { n:"Tequila Pepper", d:{es:"Tequila Centenario, sirope de pimientas y hierbas, limón mandarino y soda", en:"Centenario tequila, pepper herb syrup, mandarino lime and soda"}, p:48000 },
+        { n:{es:"No Soy un Gin Tonic", en:"I'm not a Gin Tonic"}, d:{es:"Gin Selva, condimento de limón, soda de coco Juniper", en:"Selva Gin, bitter lime seasoning, Juniper coconut soda"}, p:50000 },
+        { n:{es:"Viche Cítrico", en:"Citrus Viche"}, d:{es:"Viche Mano de Buey, cáscaras de cítricos, sirope de cardamomo y limón mandarino", en:"Mano de Buey Viche, citrus peels, cardamom syrup and mandarin lime"}, p:45000 },
+        { n:"Zombra Mule", d:{es:"Viche Mano de Buey, soda de jengibre fermentada y tomillo ahumado", en:"Mano de Buey Viche, fermented ginger soda and smoked thyme"}, p:45000 },
+        { n:{es:"Amor en la Zombra", en:"Love in the Zombra"}, d:{es:"Viche Mano de Buey, campari, cordial de remolacha y clavo, soda", en:"Mano de Buey Viche, Campari, beetroot and clove cordial, soda"}, p:45000 },
+        { n:{es:"Tomate Martini", en:"Tomato Martini"}, d:{es:"Gin Selva, agua de tomate y aceite de albahaca", en:"Selva Gin, tomato water and basil oil"}, p:48000 }
+      ]}
+    ]},
+    { id:"digestivos", t:{es:"Digestivos", en:"Digestives"}, g:[
+      { i:[
+        { n:"Limoncello", d:{es:"Preparación artesanal con limón mandarino", en:"Home-made mandarino lime limoncello"}, p:28000 },
+        { n:{es:"Licor de café", en:"Coffee Liqueur"}, d:{es:"Preparación artesanal de licor de café colombiano infusionado", en:"Home-made Colombian coffee infused liqueur"}, p:28000 }
+      ]}
+    ]},
+    { id:"espumoso", t:{es:"Espumoso", en:"Sparkling"}, g:[
+      { i:[
+        { n:"Marcel Thorel Cidra", d:{es:"Afrutado / Refrescante (Manzana)", en:"Fruity / Refreshing (Apple)"}, copa:25000, bo:100000 }
+      ]}
+    ]},
+    { id:"blanco", t:{es:"Vino blanco", en:"White wine"}, g:[
+      { nota:{es:"Preguntá por nuestros vinos de temporada", en:"Ask about our seasonal wines"}, i:[
+        { n:"Morandé Terroir Wines", d:{es:"Frutal / Ligero (Cinsault)", en:"Balanced acidity / Fresh (Cinsault)"}, copa:30000, bo:130000 },
+        { n:"L´Éclat", d:{es:"Fresco / Afrutado (Colombard, Ugni Blanc, Gros Manseng, Sauvignon Blanc)", en:"Fresh / Fruity (Colombard, Ugni Blanc, Gros Manseng, Sauvignon Blanc)"}, copa:32000, bo:140000 },
+        { n:"Les Grains Viogner", d:{es:"Afrutado / Fresco (Viogner)", en:"Fruity / Fresh (Viognier)"}, copa:32000, bo:140000 },
+        { n:"Ostatu", d:{es:"Ligera acidez / Manzana / Floral (Viura, Malvasia)", en:"Light acidity / Apple / Floral (Viura, Malvasia)"}, bo:190000 },
+        { n:"Grand Marrenon", d:{es:"Floral / Acidez fresca y elegante (Vermentino, Garnacha Blanca, Roussanne)", en:"Floral / Fresh and Elegant Acidity (Vermentino, White Grenache, Roussanne)"}, bo:240000 },
+        { n:"Frey Sohler", d:{es:"Jugoso / Ligero (Sylvaner)", en:"Juicy / Light (Sylvaner)"}, bo:170000 },
+        { n:"Menade", d:{es:"Mineral / Fresco / Hierbas (Verdejo)", en:"Mineral / Fresh / Herbs (Verdejo)"}, bo:240000 },
+        { n:"Soalheiro", d:{es:"Fresco / Elegante / Melocotón (Albariño)", en:"Fresh / Elegant / Peach (Albariño)"}, bo:250000 },
+        { n:"Santa Rita", d:{es:"Expresivo / Mineral / Floral (Multivarietal)", en:"Expressive / Mineral / Floral (Multi-varietal)"}, bo:320000 }
+      ]}
+    ]},
+    { id:"naranja", t:{es:"Vino naranja", en:"Orange wine"}, g:[
+      { i:[
+        { n:"Vía Revolucionaria", d:{es:"Singular / Fresco / Seco (Torrontés)", en:"Unique / Fresh / Dry (Torrontés)"}, bo:270000 }
+      ]}
+    ]},
+    { id:"tinto", t:{es:"Vino tinto", en:"Red wine"}, g:[
+      { i:[
+        { n:"Morandé Terroir Wines", d:{es:"Frutal / Ligero (Cinsault)", en:"Fruity / Light (Cinsault)"}, copa:30000, bo:130000 },
+        { n:"Les Grains", d:{es:"Frutos rojos / Taninos suaves (Syrah)", en:"Red berries / Mellow tannins (Syrah)"}, copa:32000, bo:140000 },
+        { n:"Zin", d:{es:"Fruta madura / Especiado / Taninos suaves (Primitivo)", en:"Ripe Fruit / Spicy / Soft Tannins (Primitivo)"}, copa:38000, bo:150000 },
+        { n:"Grand Marrenon", d:{es:"Expresivo / Fruta fresca / Taninos suaves (Syrah, Garnacha Negra)", en:"Expressive / Fresh Fruit / Soft Tannins (Syrah, Grenache Noir)"}, bo:260000 },
+        { n:"Juan Gil Plata", d:{es:"Frutas rojas / Taninos acentuados / Estructurado (Monastrell)", en:"Red fruits / Pronounced tannins / Structured (Monastrell)"}, bo:260000 },
+        { n:"Vía Revolucionaria", d:{es:"Singular / Frutos rojos (Bonarda)", en:"Singular / Red Berries (Bonarda)"}, bo:270000 },
+        { n:"Norton Altura", d:{es:"Especiado / Madera / Vibrante (Cabernet Franc)", en:"Spicy / Woody / Vibrant (Cabernet Franc)"}, bo:290000 },
+        { n:"Meandro", d:{es:"Intenso / Frutos silvestres (Multivarietal)", en:"Intense / Wild Berries (Multi-varietal)"}, bo:280000 },
+        { n:"Monsanto Annata", d:{es:"Zarzamora / Bayas dulces / Limón (Multivarietal)", en:"Blackberry / Sweet Berries / Lemon (Multi-varietal)"}, bo:320000 },
+        { n:"Fin del mundo", d:{es:"Expresivo / Frutal (Pinot noir)", en:"Expressive / Fruity (Pinot noir)"}, bo:150000 },
+        { n:"Pipeño", d:{es:"Fresco / Atípico (Cinsault, Bonarda)", en:"Fresh / Atypical (Cinsault, Bonarda)"}, bo:170000 }
+      ]}
+    ]},
+    { id:"cervezas", t:{es:"Cervezas", en:"Beer"}, g:[
+      { i:[
+        { n:"Club Dorada", p:15000 },
+        { n:"Club Roja", p:15000 },
+        { n:"Pilsen", p:12000 },
+        { n:"Berlisa Rubia", p:20000 },
+        { n:"Berlisa Negra", p:20000 }
+      ]}
+    ]},
+    { id:"sinalcohol", t:{es:"Sin alcohol", en:"Non-alcoholic"}, g:[
+      { i:[
+        { n:"San Pellegrino 505 ml", p:35000 },
+        { n:"Acqua Panna 505 ml", p:20000 },
+        { n:{es:"Agua (pequeña / grande)", en:"Water (small / large)"}, p:[12000,24000] },
+        { n:{es:"Agua con gas (pequeña / grande)", en:"Sparkling water (small / large)"}, p:[12000,24000] },
+        { n:{es:"Sodas (jengibre / pepino / lulo / durazno)", en:"Flavored sodas (ginger / cucumber / lulo / peach)"}, p:12000 },
+        { n:"Guandolito", p:12000 },
+        { n:{es:"Infusión flor de Jamaica y pasiflora", en:"Hibiscus and passionflower infusion"}, p:14000 },
+        { n:{es:"Tinto colombiano", en:"Colombian coffee"}, p:9000 },
+        { n:{es:"Infusión caliente", en:"Hot infusion"}, p:9000 }
+      ]}
+    ]}
+  ];
+
+  // id estable por ítem: evita colisiones por nombre repetido y sobrevive al cambio de idioma
+  var porId = {}, _uid = 0;
+  SECCIONES.forEach(function (sec) { sec.g.forEach(function (g) { (g.i || []).forEach(function (it) { it._id = "p" + (_uid++); porId[it._id] = it; }); }); });
+
+  /* ============================================================
+     UTILIDADES
+     ============================================================ */
+  function tx(v) { return (v && typeof v === "object" && ("es" in v)) ? v[LANG] : v; }
+  function d(k) { return (DICT[k] && DICT[k][LANG]) || ""; }
+
+  function fmt(v) { return "$" + v.toLocaleString(LANG === "es" ? "es-CO" : "en-US"); }
+  function plata(p) { return Array.isArray(p) ? p.map(fmt).join(" / ") : fmt(p); }
+
+  function plano(t) { return String(t).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) { return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]; });
+  }
+
+  var st = { q: "" };
+  function pasa(it) {
+    if (!st.q) return true;
+    return plano(tx(it.n) + " " + (it.d ? tx(it.d) : "")).indexOf(st.q) !== -1;
+  }
+
+  /* ============================================================
+     RENDER
+     ============================================================ */
+  function pintaItem(it) {
+    // fila de vino: nombre + descriptor + copa/botella
+    if (it.bo != null) {
+      var precios = "";
+      if (it.copa != null) precios += '<span class="vino__c">' + fmt(it.copa) + "<i>" + d("copa") + "</i></span>";
+      precios += '<span class="vino__b">' + fmt(it.bo) + "<i>" + d("botella") + "</i></span>";
+      return '<div class="vino"><span class="vino__n">' + esc(tx(it.n)) + "</span>" +
+        '<div class="vino__precios">' + precios + "</div>" +
+        (it.d ? '<p class="vino__d">' + esc(tx(it.d)) + "</p>" : "") +
+      "</div>";
+    }
+
+    var precio = '<p class="item__p">' + plata(it.p) + "</p>";
+    var desc = it.d ? '<p class="item__d">' + esc(tx(it.d)) + "</p>" : "";
+
+    if (it.clip || it.foto) {
+      return '<article class="item item--ver" tabindex="0" role="button" aria-label="' + esc(d("ver") + " · " + tx(it.n) + " · " + plata(it.p)) + '" data-abrir="' + it._id + '">' +
+        '<h4 class="item__n">' + esc(tx(it.n)) + "</h4>" +
+        '<div class="item__col2">' + precio + '<p class="ver">' + d("ver") + "</p></div>" +
+        desc +
+      "</article>";
+    }
+    return '<article class="item"><h4 class="item__n">' + esc(tx(it.n)) + "</h4>" + precio + desc + "</article>";
+  }
+
+  function pintaDeg() {
+    var cards = DEG.menus.map(function (m) {
+      return '<div class="menu-card"><p class="menu-card__n">' + esc(tx(m.n)) + '</p><p class="menu-card__p">' + fmt(m.p) + "</p></div>";
+    }).join("");
+    var hambre = DEG.hambre.map(function (h, i) {
+      return "<li><span class=\"hambre__n\">" + (i + 1) + "</span><span>" + esc(tx(h)) + "</span></li>";
+    }).join("");
+    var maridaje = DEG.maridaje.map(function (m) {
+      return "<span><b>" + esc(tx(m.n)) + "</b> <i>" + fmt(m.p) + "</i></span>";
+    }).join("");
+    return '<section class="deg" id="degustacion">' +
+      '<header class="deg__cab"><h2 class="deg__t">' + esc(d("degT")) + '</h2>' +
+        '<p class="deg__intro">' + esc(d("degIntro")) + "</p></header>" +
+      '<div class="menus">' + cards + "</div>" +
+      '<div class="hambre"><p class="hambre__rotulo">' + esc(d("hambreRotulo")) + "</p>" +
+        '<ul class="hambre__grid">' + hambre + "</ul>" +
+        '<div class="maridaje"><b style="color:var(--ink-3);font-weight:500;letter-spacing:.2em;text-transform:uppercase;font-size:var(--fs-micro)">' + esc(d("maridajeRot")) + "</b>" + maridaje + "</div>" +
+      "</div></section>";
+  }
+
+  function render() {
+    var html = pintaDeg(), hubo = true, visibles = { degustacion: !st.q };
+
+    SECCIONES.forEach(function (sec) {
+      var cuerpo = "";
+      sec.g.forEach(function (g) {
+        var filas = g.i.filter(pasa).map(pintaItem).join("");
+        if (!filas) return;
+        cuerpo += '<section class="grupo">' +
+          (g.t ? '<h3 class="grupo__t">' + esc(tx(g.t)) + "</h3>" : "") +
+          (g.nota ? '<p class="grupo__nota">' + esc(tx(g.nota)) + "</p>" : "") +
+          filas + "</section>";
+      });
+      if (!cuerpo) return;
+      visibles[sec.id] = true;
+      html += '<section class="acto" id="' + sec.id + '"><header class="acto__cab"><h2 class="acto__t">' + esc(tx(sec.t)) + "</h2></header>" + cuerpo + "</section>";
+    });
+
+    if (st.q && Object.keys(visibles).filter(function (k) { return visibles[k]; }).length === 0) {
+      html = '<div class="vacio"><b>' + esc(d("vacioT")) + "</b><p>" + esc(d("vacioP")) + "</p></div>";
+    }
+
+    var menuEl = document.getElementById("menu");
+    menuEl.innerHTML = html;
+    document.querySelectorAll("#tamiz [data-ir]").forEach(function (b) {
+      b.hidden = st.q ? !visibles[b.dataset.ir] : false;
+    });
+    var live = document.getElementById("liveResults");
+    if (live) {
+      if (st.q) {
+        var nres = menuEl.querySelectorAll(".item, .vino").length;
+        live.textContent = nres ? (nres + (LANG === "es" ? " resultados" : " results")) : d("vacioT");
+      } else { live.textContent = ""; }
+    }
+    revelar();
+  }
+
+  var ojo = null;
+  function revelar() {
+    if (ojo) ojo.disconnect();
+    if (poco) { document.querySelectorAll(".item, .vino").forEach(function (e) { e.classList.add("vista"); }); return; }
+    ojo = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("vista"); ojo.unobserve(e.target); } });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.02 });
+    document.querySelectorAll(".item, .vino").forEach(function (e) { ojo.observe(e); });
+  }
+
+  /* ============================================================
+     CHIPS DE NAVEGACIÓN — a las secciones reales
+     ============================================================ */
+  var NAV = [{ id: "degustacion", t: DICT.degT }].concat(SECCIONES.map(function (s) { return { id: s.id, t: s.t }; }));
+  function pintaNav() {
+    document.getElementById("tamiz").innerHTML = NAV.map(function (n) {
+      return '<button data-ir="' + n.id + '">' + esc(tx(n.t)) + "</button>";
+    }).join("");
+    document.querySelectorAll("#tamiz [data-ir]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var sec = document.getElementById(b.dataset.ir);
+        if (!sec) return;
+        var alto = document.querySelector(".utiles").offsetHeight;
+        var y = sec.getBoundingClientRect().top + window.scrollY - alto - 8;
+        window.scrollTo({ top: y, behavior: poco ? "auto" : "smooth" });
+      });
+    });
+  }
+
+  /* ============================================================
+     IDIOMA
+     ============================================================ */
+  function aplicarIdioma() {
+    document.documentElement.lang = LANG;
+    document.querySelectorAll("[data-k]").forEach(function (el) {
+      var v = d(el.dataset.k);
+      if (v.indexOf("\n") !== -1) { el.innerHTML = esc(v).replace(/\n/g, "<br>"); }
+      else { el.textContent = v; }
+    });
+    document.querySelectorAll("[data-k-ph]").forEach(function (el) { el.setAttribute("placeholder", d(el.dataset.kPh)); });
+    document.querySelectorAll("[data-k-aria]").forEach(function (el) { el.setAttribute("aria-label", d(el.dataset.kAria)); });
+    document.querySelectorAll(".idioma button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.lang === LANG ? "true" : "false"); });
+    // los nombres cambian de idioma: la búsqueda vieja ya no aplica
+    var inputQ = document.getElementById("q");
+    if (inputQ) inputQ.value = "";
+    st.q = "";
+    pintaNav();
+    render();
+    latido();
+    // si el reverso está abierto, re-traducilo al idioma nuevo
+    if (rev.dataset.abierto === "1" && revItemId && porId[revItemId]) pintaReverso(porId[revItemId]);
+  }
+
+  document.querySelectorAll(".idioma button").forEach(function (b) {
+    b.addEventListener("click", function () { if (b.dataset.lang !== LANG) { LANG = b.dataset.lang; aplicarIdioma(); } });
+  });
+
+  /* ============================================================
+     ESTADO DE LA CASA — abierto Lun–Sáb 12:00–22:00
+     ============================================================ */
+  function latido() {
+    // hora de Medellín, sin depender de la zona horaria del dispositivo
+    var partes = new Intl.DateTimeFormat("en-US", { timeZone: "America/Bogota", hour12: false, weekday: "short", hour: "2-digit", minute: "2-digit" }).formatToParts(new Date());
+    var get = function (t) { for (var i = 0; i < partes.length; i++) if (partes[i].type === t) return partes[i].value; return ""; };
+    var hora = parseInt(get("hour"), 10); if (hora === 24) hora = 0;
+    var h = hora + parseInt(get("minute"), 10) / 60;
+    var dia = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }[get("weekday")];
+    var domingo = dia === 0;
+    var abierto = !domingo && h >= 12 && h < 22;
+    document.getElementById("punto").className = abierto ? "punto" : "punto punto--off";
+    document.getElementById("estado").textContent = abierto ? d("abierto") : (domingo ? d("domingo") : (h < 12 ? d("abre") : d("cerrado")));
+  }
+
+  /* ============================================================
+     BÚSQUEDA
+     ============================================================ */
+  var tecla = null;
+  document.getElementById("q").addEventListener("input", function (e) {
+    var v = plano(e.target.value.trim());
+    clearTimeout(tecla);
+    tecla = setTimeout(function () { st.q = v; render(); }, 140);
+  });
+
+  /* ============================================================
+     EL REVERSO — la foto vive detrás de la carta
+     ============================================================ */
+  var rev = document.getElementById("reverso");
+  var revMedia = document.getElementById("revMedia");
+  var revItemId = null, scrollY = 0;
+  var FONDO = "#carta, .utiles, #menu, .pie";
+
+  function pintaReverso(it) {
+    revMedia.innerHTML = it.clip
+      ? '<video src="' + esc(it.clip) + '" poster="' + esc(it.cartel || "") + '" muted loop playsinline autoplay preload="auto" disablepictureinpicture></video>'
+      : '<img src="' + esc(it.foto) + '" alt="' + esc(tx(it.n)) + '">';
+    document.getElementById("revNombre").textContent = tx(it.n);
+    document.getElementById("revDesc").textContent = it.d ? tx(it.d) : "";
+    document.getElementById("revPrecio").textContent = plata(it.p);
+  }
+
+  function abrirReverso(id) {
+    var it = porId[id];
+    if (!it || (!it.clip && !it.foto)) return;
+    revItemId = id;
+    pintaReverso(it);
+    scrollY = window.scrollY;
+    document.body.style.top = (-scrollY) + "px";
+    document.body.dataset.quieto = "1";
+    document.querySelectorAll(FONDO).forEach(function (el) { el.setAttribute("inert", ""); });
+    rev.dataset.abierto = "1";
+    document.getElementById("revCerrar").focus();
+  }
+  function cerrarReverso() {
+    if (rev.dataset.abierto !== "1") return;
+    rev.dataset.abierto = "0";
+    delete document.body.dataset.quieto;
+    document.body.style.top = "";
+    document.querySelectorAll(FONDO).forEach(function (el) { el.removeAttribute("inert"); });
+    var prev = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, scrollY);
+    document.documentElement.style.scrollBehavior = prev;
+    setTimeout(function () { if (rev.dataset.abierto !== "1") revMedia.innerHTML = ""; }, 400);
+    var volver = revItemId && document.querySelector('[data-abrir="' + revItemId + '"]');
+    if (volver && volver.focus) volver.focus(); else document.getElementById("q").focus();
+    revItemId = null;
+  }
+  document.getElementById("revCerrar").addEventListener("click", cerrarReverso);
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") cerrarReverso(); });
+  document.getElementById("menu").addEventListener("click", function (e) {
+    var fila = e.target.closest("[data-abrir]"); if (fila) abrirReverso(fila.dataset.abrir);
+  });
+  document.getElementById("menu").addEventListener("keydown", function (e) {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    var fila = e.target.closest("[data-abrir]"); if (!fila) return;
+    e.preventDefault(); abrirReverso(fila.dataset.abrir);
+  });
+  var tocoY = null;
+  rev.addEventListener("touchstart", function (e) { tocoY = e.touches[0].clientY; }, { passive: true });
+  rev.addEventListener("touchend", function (e) {
+    if (tocoY !== null && e.changedTouches[0].clientY - tocoY > 90) cerrarReverso();
+    tocoY = null;
+  }, { passive: true });
+
+  /* ============================================================
+     LA ENTRADA — una sola toma; scroll → currentTime
+     ============================================================ */
+  var entrada = document.getElementById("entrada");
+  var track = entrada.querySelector(".entrada__track");
+  var video = entrada.querySelector("video");
+  var cues = [].slice.call(entrada.querySelectorAll("[data-cue]"));
+  var barTop = document.getElementById("barTop");
+  var pista = document.getElementById("pista");
+  var omitir = document.getElementById("omitir");
+  var objetivo = 0, corriendo = false;
+
+  function tope(v, a, b) { return v < a ? a : v > b ? b : v; }
+  function medir() {
+    var r = track.getBoundingClientRect();
+    var largo = track.offsetHeight - document.documentElement.clientHeight;
+    return tope(-r.top / largo, 0, 1);
+  }
+  function pintarEntrada() {
+    var p = medir();
+    barTop.style.width = (p * 100).toFixed(2) + "%";
+    if (video && video.duration) objetivo = p * (video.duration - 0.05);
+
+    var C = cues.length;
+    cues.forEach(function (c, i) {
+      var centro = (i + 0.5) / C;
+      var dd = (p - centro) * C;
+      var o = tope(1 - Math.abs(dd) * 2, 0, 1);
+      if (i === 0 && p < centro) o = 1;
+      if (i === C - 1 && p > centro) o = 1;
+      c.style.opacity = o.toFixed(3);
+      c.style.transform = "translateY(" + (dd * -24).toFixed(1) + "px)";
+    });
+    var marca = cues[0] && cues[0].querySelector(".marca img");
+    if (marca) marca.style.transform = "scale(" + (1 + tope(p * 3, 0, 1) * 0.12).toFixed(4) + ")";
+
+    var dentro = p < 0.999;
+    if (dentro !== corriendo) {
+      corriendo = dentro;
+      if (dentro) requestAnimationFrame(seek);
+      else { try { video.pause(); } catch (e) {} }
+    }
+    if (pista) pista.style.opacity = p > .03 ? "0" : "1";
+    var fuera = p > .96;
+    omitir.style.opacity = fuera ? "0" : "1";
+    omitir.style.pointerEvents = fuera ? "none" : "auto";
+    omitir.tabIndex = fuera ? -1 : 0;
+  }
+  function seek() {
+    if (video && video.duration) {
+      var actual = video.currentTime;
+      if (Math.abs(objetivo - actual) > 0.015) { try { video.currentTime = actual + (objetivo - actual) * 0.28; } catch (e) {} }
+    }
+    if (corriendo) requestAnimationFrame(seek);
+  }
+  function cebar() {
+    var a = video.play();
+    if (a && a.then) a.then(function () { video.pause(); }).catch(function () {});
+  }
+  var pendiente = false;
+  function alScroll() {
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(function () { pendiente = false; pintarEntrada(); });
+  }
+  function quitarEntrada() {
+    entrada.remove(); barTop.remove(); omitir.remove();
+    corriendo = false;
+    window.removeEventListener("scroll", alScroll);
+    window.removeEventListener("resize", alScroll);
+  }
+  omitir.addEventListener("click", function () {
+    document.getElementById("carta").scrollIntoView({ behavior: poco ? "auto" : "smooth" });
+  });
+
+  /* ============================================================
+     ARRANQUE
+     ============================================================ */
+  aplicarIdioma();
+  setInterval(latido, 30000);
+
+  if (poco) {
+    quitarEntrada();
+  } else {
+    video.addEventListener("loadedmetadata", function () { cebar(); pintarEntrada(); }, { once: true });
+    if (video.readyState >= 1) { cebar(); pintarEntrada(); }
+    window.addEventListener("scroll", alScroll, { passive: true });
+    window.addEventListener("resize", alScroll);
+    corriendo = true;
+    requestAnimationFrame(seek);
+    pintarEntrada();
+  }
+})();
+</script>
+
+</body>
+</html>
